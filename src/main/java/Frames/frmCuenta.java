@@ -59,7 +59,7 @@ public class frmCuenta extends javax.swing.JFrame {
         jLabel3.setText("Cliente:");
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 70, -1, -1));
 
-        jLabel4.setText("no");
+        jLabel4.setText("xx");
         getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 70, -1, -1));
 
         pack();
