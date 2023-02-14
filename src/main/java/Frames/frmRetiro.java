@@ -26,9 +26,9 @@ public class frmRetiro extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jDayChooser2 = new com.toedter.calendar.JDayChooser();
         txtCantidad = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
-        chboxSinCuenta = new javax.swing.JCheckBox();
         Retiro = new javax.swing.JLabel();
         btnAceptar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
@@ -40,13 +40,15 @@ public class frmRetiro extends javax.swing.JFrame {
         jLabel1.setText("Cantidad");
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(86, 85, -1, -1));
 
-        chboxSinCuenta.setText("RetirarSinCuenta");
-        getContentPane().add(chboxSinCuenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(286, 81, -1, -1));
-
-        Retiro.setText("Retiro");
+        Retiro.setText("Crear Retiro");
         getContentPane().add(Retiro, new org.netbeans.lib.awtextra.AbsoluteConstraints(169, 11, -1, -1));
 
         btnAceptar.setText("Aceptar");
+        btnAceptar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAceptarActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnAceptar, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 220, -1, -1));
 
         btnCancelar.setText("Cancelar");
@@ -54,6 +56,13 @@ public class frmRetiro extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
+
+        
+        
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAceptarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -94,7 +103,7 @@ public class frmRetiro extends javax.swing.JFrame {
     private javax.swing.JLabel Retiro;
     private javax.swing.JButton btnAceptar;
     private javax.swing.JButton btnCancelar;
-    private javax.swing.JCheckBox chboxSinCuenta;
+    private com.toedter.calendar.JDayChooser jDayChooser2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JTextField txtCantidad;
     // End of variables declaration//GEN-END:variables

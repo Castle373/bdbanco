@@ -4,18 +4,23 @@
  */
 package Frames;
 
+import Entidades.Cliente;
+import enumeradores.AccionCatalogoEnum;
 import javax.swing.JOptionPane;
+import persistencia.IClientesDAO;
 
 /**
  *
  * @author diego
  */
 public class frmMenu extends javax.swing.JFrame {
-
+     IClientesDAO clienteDAO;     
+     private AccionCatalogoEnum accion;
     /**
      * Creates new form NewJFrame
      */
-    public frmMenu() {
+    public frmMenu(IClientesDAO clienteDAO) {
+        this.clienteDAO = clienteDAO;
         initComponents();
     }
 
@@ -40,7 +45,6 @@ public class frmMenu extends javax.swing.JFrame {
         comboBoxCuentas = new javax.swing.JComboBox<>();
         jSeparator1 = new javax.swing.JSeparator();
         jSeparator2 = new javax.swing.JSeparator();
-        txtp1 = new javax.swing.JTextField();
         lblNombre = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
@@ -51,9 +55,9 @@ public class frmMenu extends javax.swing.JFrame {
         btnCrearRetiro = new javax.swing.JButton();
         btnCrearCuenta = new javax.swing.JButton();
         btnRegistro = new javax.swing.JButton();
-        jButton8 = new javax.swing.JButton();
         btnRetiro = new javax.swing.JButton();
         BtnRetirarSinCuenta = new javax.swing.JButton();
+        jPasswordField1 = new javax.swing.JPasswordField();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -81,7 +85,7 @@ public class frmMenu extends javax.swing.JFrame {
                 txtpKeyTyped(evt);
             }
         });
-        getContentPane().add(txtp, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 50, 160, -1));
+        getContentPane().add(txtp, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 50, 180, -1));
 
         jLabel1.setText("Contraseña");
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 80, 70, 20));
@@ -96,7 +100,7 @@ public class frmMenu extends javax.swing.JFrame {
                 btnIniciarSesionActionPerformed(evt);
             }
         });
-        getContentPane().add(btnIniciarSesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 50, 90, -1));
+        getContentPane().add(btnIniciarSesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 50, 90, -1));
 
         btnTransferencia.setText("Transferir");
         btnTransferencia.addActionListener(new java.awt.event.ActionListener() {
@@ -112,7 +116,7 @@ public class frmMenu extends javax.swing.JFrame {
                 btnActualizarDatosActionPerformed(evt);
             }
         });
-        getContentPane().add(btnActualizarDatos, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 110, 140, -1));
+        getContentPane().add(btnActualizarDatos, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 110, 140, -1));
 
         comboBoxCuentas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         comboBoxCuentas.addActionListener(new java.awt.event.ActionListener() {
@@ -121,22 +125,10 @@ public class frmMenu extends javax.swing.JFrame {
             }
         });
         getContentPane().add(comboBoxCuentas, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, 160, 30));
-        getContentPane().add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 140, 350, 10));
+        getContentPane().add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 140, 430, 10));
 
         jSeparator2.setOrientation(javax.swing.SwingConstants.VERTICAL);
         getContentPane().add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 0, 20, 140));
-
-        txtp1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtp1ActionPerformed(evt);
-            }
-        });
-        txtp1.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtp1KeyTyped(evt);
-            }
-        });
-        getContentPane().add(txtp1, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 80, 160, -1));
 
         lblNombre.setText("Nombre");
         getContentPane().add(lblNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 10, -1, -1));
@@ -182,10 +174,12 @@ public class frmMenu extends javax.swing.JFrame {
         getContentPane().add(btnCrearCuenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, -1, -1));
 
         btnRegistro.setText("Registrar");
-        getContentPane().add(btnRegistro, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 80, 90, -1));
-
-        jButton8.setText("Registrar");
-        getContentPane().add(jButton8, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 80, 90, -1));
+        btnRegistro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegistroActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnRegistro, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 80, 90, -1));
 
         btnRetiro.setText("Retirar Saldo");
         btnRetiro.addActionListener(new java.awt.event.ActionListener() {
@@ -197,8 +191,10 @@ public class frmMenu extends javax.swing.JFrame {
 
         BtnRetirarSinCuenta.setText("Retirar Sin cuenta");
         getContentPane().add(BtnRetirarSinCuenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 350, 160, -1));
+        getContentPane().add(jPasswordField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 80, 180, -1));
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtpActionPerformed
@@ -230,14 +226,6 @@ public class frmMenu extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnTransferenciaActionPerformed
 
-    private void txtp1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtp1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtp1ActionPerformed
-
-    private void txtp1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtp1KeyTyped
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtp1KeyTyped
-
     private void comboBoxCuentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBoxCuentasActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_comboBoxCuentasActionPerformed
@@ -253,6 +241,12 @@ public class frmMenu extends javax.swing.JFrame {
     private void btnRetiroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRetiroActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnRetiroActionPerformed
+
+    private void btnRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistroActionPerformed
+        Cliente cli = new Cliente();       
+        frmCliente registro = new frmCliente(cli,accion.NUEVO,this.clienteDAO);
+        registro.setVisible(true);
+    }//GEN-LAST:event_btnRegistroActionPerformed
 
     /**
      * @param args the command line arguments
@@ -285,7 +279,7 @@ public class frmMenu extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new frmMenu().setVisible(true);
+            //    new frmMenu().setVisible(true);
             }
         });
     }
@@ -300,12 +294,12 @@ public class frmMenu extends javax.swing.JFrame {
     private javax.swing.JButton btnRetiro;
     private javax.swing.JButton btnTransferencia;
     private javax.swing.JComboBox<String> comboBoxCuentas;
-    private javax.swing.JButton jButton8;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JProgressBar jProgressBar1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
@@ -316,6 +310,5 @@ public class frmMenu extends javax.swing.JFrame {
     private javax.swing.JLabel lblNombre;
     private javax.swing.JTable tblHistorial;
     private javax.swing.JTextField txtp;
-    private javax.swing.JTextField txtp1;
     // End of variables declaration//GEN-END:variables
 }
