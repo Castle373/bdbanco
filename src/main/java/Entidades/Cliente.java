@@ -32,12 +32,17 @@ public class Cliente {
         this.calleNumero = calleNumero;
         this.edad=edad;
         this.contra=contra;
+        
     }
 
+    public Cliente(String idCliente,String contra) {
+        this.idCliente = idCliente;
+        this.contra=contra;
+    }
     public Cliente(String idCliente) {
         this.idCliente = idCliente;
     }
-
+ 
     public String getIdCliente() {
         return idCliente;
     }

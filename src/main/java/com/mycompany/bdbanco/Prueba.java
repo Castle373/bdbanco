@@ -4,6 +4,7 @@
  */
 package com.mycompany.bdbanco;
 
+import Frames.frmInicio;
 import Frames.frmMenu;
 import persistencia.ClientesDAO;
 import persistencia.ConexionBD;
@@ -22,7 +23,7 @@ public class Prueba {
     public static void main(String[] args) {
        IConexionBD cone = new ConexionBD();
        IClientesDAO emple = new ClientesDAO();
-       frmMenu frame = new frmMenu(emple);
+       frmInicio frame = new frmInicio(emple);
        frame.setVisible(true);
     }
     

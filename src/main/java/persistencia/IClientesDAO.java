@@ -14,8 +14,9 @@ import java.util.List;
 public interface IClientesDAO {
   public List<Cliente> ListaCliente();
   public List<Cliente> ListaClienteNombre();
-  public Cliente buscarPorIdCliente(int Cliente);
-  public Cliente guardar(Cliente empleado);
-  public Cliente editar(Cliente empleado);
-  public Cliente eliminar(Cliente empleado);
+  public Cliente InicioSesionCliente(Cliente cliente);
+  public Cliente buscarPorIdCliente(String Cliente);
+  public Cliente guardar(Cliente cliente);
+  public Cliente editar(Cliente cliente);
+  public Cliente eliminar(Cliente cliente);
 }

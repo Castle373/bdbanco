@@ -65,7 +65,7 @@ public class ClientesDAO implements IClientesDAO{
     }
 
     @Override
-    public Cliente buscarPorIdCliente(int Cliente) {
+    public Cliente buscarPorIdCliente(String Cliente) {
         Cliente clienteEncontrado = new Cliente();
         try {
             Connection conex = this.conexion.crearConexion();
@@ -163,6 +163,38 @@ public class ClientesDAO implements IClientesDAO{
             return null;
         }
          return cliente;
+    }
+
+    @Override
+    public Cliente InicioSesionCliente(Cliente cliente) {
+        Cliente clienteEncontrado=null;
+        try {
+            Connection conex = this.conexion.crearConexion();
+            Statement comandoSQL = conex.createStatement();
+            String querySql= "Select * From Cliente WHERE idCliente ='"+cliente.getIdCliente()+"' and contrasena='"+cliente.getContra()+"'";
+             ResultSet resultado = comandoSQL.executeQuery(querySql);
+             
+             if(resultado.next()){
+                 String idCliente = resultado.getString("idCliente");
+                 String nombres = resultado.getString("nombres");
+                 String apellidoPaterno = resultado.getString("apellidoPaterno");
+                 String apellidoMaterno = resultado.getString("apellidoMaterno");
+                 String edad = resultado.getString("edad");
+                 String fechaNacimiento = resultado.getString("fechaNacimiento");
+                 String ciudad = resultado.getString("ciudad");
+                 String colinia = resultado.getString("colinia");
+                 String calleNumero = resultado.getString("calleNumero");       
+                 String contra = resultado.getString("contrasena");   
+                 clienteEncontrado = new Cliente(idCliente,nombres,apellidoPaterno,apellidoMaterno,
+                                                 fechaNacimiento,ciudad,colinia,calleNumero,edad,contra);        
+
+         }
+        conex.close();
+        return clienteEncontrado;
+        } catch (SQLException ex) {
+            Logger.getLogger(ClientesDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+      return clienteEncontrado;
     }
     
 }
