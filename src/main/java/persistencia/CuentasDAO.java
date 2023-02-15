@@ -40,7 +40,7 @@ public class CuentasDAO implements ICuentasDAO{
                  String numeroCuenta = resultado.getString("numeroCuenta");
                  String fechaApertura = resultado.getString("fechaApertura");
                  String estado = resultado.getString("estado");
-                 String saldo = resultado.getString("fechaNacimiento");
+                 float saldo = resultado.getFloat("saldo");
                  String idCliente = resultado.getString("idCliente");  
                  Cuenta nuevoCuenta = new Cuenta(numeroCuenta,fechaApertura,estado,saldo,idCliente); 
              listCuenta.add(nuevoCuenta);
@@ -66,7 +66,7 @@ public class CuentasDAO implements ICuentasDAO{
                  String numeroCuenta = resultado.getString("numeroCuenta");
                  String fechaApertura = resultado.getString("fechaApertura");
                  String estado = resultado.getString("estado");
-                 String saldo = resultado.getString("fechaNacimiento");
+                 float saldo = resultado.getFloat("saldo");
                  String idCliente = resultado.getString("idCliente");  
                  cuentaEncontrado = new Cuenta(numeroCuenta,fechaApertura,estado,saldo,idCliente);       
 
@@ -136,7 +136,7 @@ public class CuentasDAO implements ICuentasDAO{
                  String numeroCuenta = resultado.getString("numeroCuenta");
                  String fechaApertura = resultado.getString("fechaApertura");
                  String estado = resultado.getString("estado");
-                 String saldo = resultado.getString("fechaNacimiento");
+                 float saldo = resultado.getFloat("saldo");
                  String idCliente = resultado.getString("idCliente");  
                  Cuenta nuevoCuenta = new Cuenta(numeroCuenta,fechaApertura,estado,saldo,idCliente); 
              listCuenta.add(nuevoCuenta);
@@ -166,7 +166,7 @@ public class CuentasDAO implements ICuentasDAO{
                  String numeroCuenta = resultado.getString("numeroCuenta");
                  String fechaApertura = resultado.getString("fechaApertura");
                  String estado = resultado.getString("estado");
-                 String saldo = resultado.getString("saldo");
+                 float saldo = resultado.getFloat("saldo");
                  String idCliente = resultado.getString("idCliente");  
                  Cuenta nuevoCuenta = new Cuenta(numeroCuenta,fechaApertura,estado,saldo,idCliente); 
              listCuenta.add(nuevoCuenta);

@@ -100,11 +100,9 @@ public class frmMenu extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jTable1);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lblDinero.setFont(new java.awt.Font("Vani", 1, 14)); // NOI18N
         lblDinero.setText(":");
-        getContentPane().add(lblDinero, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 160, 60, 40));
 
         btnTransferencia.setText("Transferir");
         btnTransferencia.addActionListener(new java.awt.event.ActionListener() {
@@ -112,15 +110,12 @@ public class frmMenu extends javax.swing.JFrame {
                 btnTransferenciaActionPerformed(evt);
             }
         });
-        getContentPane().add(btnTransferencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 270, 160, -1));
 
         jLabel6.setFont(new java.awt.Font("Vani", 1, 48)); // NOI18N
         jLabel6.setText("Cuentas");
-        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 290, 80));
 
         jLabel7.setFont(new java.awt.Font("Vani", 1, 14)); // NOI18N
         jLabel7.setText("Saldo");
-        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 160, 60, 40));
 
         tblHistorial.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -135,15 +130,12 @@ public class frmMenu extends javax.swing.JFrame {
         ));
         jScrollPane2.setViewportView(tblHistorial);
 
-        getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 170, 460, 260));
-
         btnCrearRetiro.setText(" Retiro Sin Cuenta");
         btnCrearRetiro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCrearRetiroActionPerformed(evt);
             }
         });
-        getContentPane().add(btnCrearRetiro, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 310, 160, -1));
 
         btnCrearCuenta.setText("Crear Cuenta");
         btnCrearCuenta.addActionListener(new java.awt.event.ActionListener() {
@@ -151,7 +143,6 @@ public class frmMenu extends javax.swing.JFrame {
                 btnCrearCuentaActionPerformed(evt);
             }
         });
-        getContentPane().add(btnCrearCuenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, -1, -1));
 
         btnRetiro.setText("Retirar Saldo");
         btnRetiro.addActionListener(new java.awt.event.ActionListener() {
@@ -159,21 +150,88 @@ public class frmMenu extends javax.swing.JFrame {
                 btnRetiroActionPerformed(evt);
             }
         });
-        getContentPane().add(btnRetiro, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 230, 160, -1));
 
         BtnRetirarSinCuenta.setText("Retirar Sin cuenta");
-        getContentPane().add(BtnRetirarSinCuenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 350, 160, -1));
 
         jLabel1.setText("Nombre:");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 50, -1, -1));
 
         lblCliente.setText("N");
-        getContentPane().add(lblCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 40, 250, 40));
 
         lblAviso.setText("No se Encontro Ninguna Cuenta");
-        getContentPane().add(lblAviso, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, 230, 40));
 
-        getContentPane().add(comboBoxCuentas, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, 240, 40));
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(btnCrearCuenta))
+                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(30, 30, 30)
+                .addComponent(jLabel1)
+                .addGap(10, 10, 10)
+                .addComponent(lblCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblAviso, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(comboBoxCuentas, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(40, 40, 40)
+                                .addComponent(lblDinero, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(btnRetiro, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnTransferencia, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnCrearRetiro, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(BtnRetirarSinCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(10, 10, 10)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 460, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(70, 70, 70)
+                        .addComponent(btnCrearCuenta))
+                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(40, 40, 40)
+                        .addComponent(jLabel1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(30, 30, 30)
+                        .addComponent(lblCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(15, 15, 15)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblAviso, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(comboBoxCuentas, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblDinero, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(30, 30, 30)
+                        .addComponent(btnRetiro)
+                        .addGap(15, 15, 15)
+                        .addComponent(btnTransferencia)
+                        .addGap(15, 15, 15)
+                        .addComponent(btnCrearRetiro)
+                        .addGap(15, 15, 15)
+                        .addComponent(BtnRetirarSinCuenta))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE))))
+        );
 
         pack();
         setLocationRelativeTo(null);

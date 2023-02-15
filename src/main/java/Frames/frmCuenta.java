@@ -7,8 +7,18 @@ package Frames;
 import Entidades.Cliente;
 import Entidades.Cuenta;
 import enumeradores.AccionCatalogoEnum;
+import java.awt.Color;
 import java.awt.Font;
+import java.awt.FontFormatException;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import persistencia.IClientesDAO;
 import persistencia.ICuentasDAO;
 
@@ -21,6 +31,7 @@ public class frmCuenta extends javax.swing.JFrame {
     private final ICuentasDAO ICuentasDAO;
     private Font font = null;
     private AccionCatalogoEnum accion;
+    FondoPanel fondo = new FondoPanel();
     /**
      * Creates new form frmCuenta
      */
@@ -28,12 +39,24 @@ public class frmCuenta extends javax.swing.JFrame {
         this.ICuentasDAO = cuentasDAO;
         this.accion = accion;
         this.cliente = cliente;
+        this.setContentPane(fondo);
         initComponents();
+        lblCliente.setText(cliente.getNombres()+" "+cliente.getApellidoPaterno()+" "+cliente.getApellidoMaterno());
+        
+        try {
+            crearFont(); 
+                    } catch (FontFormatException ex) {
+            Logger.getLogger(frmCuenta.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(frmCuenta.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+         
     }
     private Cuenta getCuentaControles(){
         Cuenta Cuenta = new Cuenta();
         Cuenta.setIdCliente(cliente.getIdCliente());
-        Cuenta.setSaldo(txtSaldo.getText());  
+        Cuenta.setSaldo(Float.parseFloat(txtSaldo.getText()));  
         return Cuenta;
     }
     private void guardar() {
@@ -48,6 +71,30 @@ public class frmCuenta extends javax.swing.JFrame {
         }
 
     }
+     public void crearFont() throws FontFormatException, IOException{
+        //Creacion de Fuentes
+        String fuente="/contb.ttf";
+        InputStream is= getClass().getResourceAsStream(fuente);
+        font = Font.createFont(Font.TRUETYPE_FONT, is);
+        
+        //Fuente de diferentes Tamaños
+        font = font.deriveFont(0, 30);
+        Font font1 = font.deriveFont(0, 18);
+        
+        //Colocar Fuentes
+      //  lblCliente.setFont(font1);
+        lblClientePar.setFont(font1);
+        lblTitulo.setFont(font);
+        lblSaldo.setFont(font1);
+        txtSaldo.setFont(font1);
+        
+        //Colocar Colores A Label
+        lblCliente.setForeground(Color.black);
+        lblClientePar.setForeground(Color.black);
+        lblTitulo.setForeground(Color.black);
+        lblSaldo.setForeground(Color.black);
+        txtSaldo.setForeground(Color.black);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -57,32 +104,27 @@ public class frmCuenta extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
+        lblSaldo = new javax.swing.JLabel();
         txtSaldo = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
+        lblTitulo = new javax.swing.JLabel();
         btnCancelar = new javax.swing.JButton();
         btnAceptar = new javax.swing.JButton();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
+        lblClientePar = new javax.swing.JLabel();
+        lblCliente = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setText("Saldo");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 110, -1, 20));
+        lblSaldo.setText("Saldo");
 
         txtSaldo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtSaldoActionPerformed(evt);
             }
         });
-        getContentPane().add(txtSaldo, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 110, 130, -1));
 
-        jLabel2.setText("CrearCuenta");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 30, -1, -1));
+        lblTitulo.setText("Crear Cuenta");
 
         btnCancelar.setText("Cancelar");
-        getContentPane().add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 220, 80, 30));
 
         btnAceptar.setText("Crear");
         btnAceptar.addActionListener(new java.awt.event.ActionListener() {
@@ -90,25 +132,71 @@ public class frmCuenta extends javax.swing.JFrame {
                 btnAceptarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnAceptar, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 220, 80, 30));
 
-        jLabel3.setText("Cliente:");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 70, -1, -1));
+        lblClientePar.setText("Cliente:");
 
-        jLabel4.setText("no");
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 70, -1, -1));
+        lblCliente.setFont(new java.awt.Font("Vani", 0, 18)); // NOI18N
+        lblCliente.setText("no");
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(152, 152, 152)
+                        .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(50, 50, 50)
+                        .addComponent(btnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(147, 147, 147)
+                        .addComponent(lblTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(97, 97, 97)
+                        .addComponent(lblClientePar)
+                        .addGap(18, 18, 18)
+                        .addComponent(lblCliente))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(99, 99, 99)
+                        .addComponent(lblSaldo)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtSaldo, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(163, Short.MAX_VALUE))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(26, 26, 26)
+                .addComponent(lblTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblCliente)
+                    .addComponent(lblClientePar))
+                .addGap(24, 24, 24)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtSaldo, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblSaldo, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(73, 73, 73)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(82, Short.MAX_VALUE))
+        );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtSaldoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSaldoActionPerformed
-        // TODO add your handling code here:
+     this.dispose();
     }//GEN-LAST:event_txtSaldoActionPerformed
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         if (txtSaldo.getText().equals("")){         
         }else{
             this.guardar();
+            this.dispose();
         }
     
     }//GEN-LAST:event_btnAceptarActionPerformed
@@ -151,10 +239,30 @@ public class frmCuenta extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptar;
     private javax.swing.JButton btnCancelar;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel lblCliente;
+    private javax.swing.JLabel lblClientePar;
+    private javax.swing.JLabel lblSaldo;
+    private javax.swing.JLabel lblTitulo;
     private javax.swing.JTextField txtSaldo;
     // End of variables declaration//GEN-END:variables
+class FondoPanel extends JPanel {
+
+        private Image imagen;
+
+        @Override
+        public void paint(Graphics g) {
+            ImageIcon imageIcon = new javax.swing.ImageIcon(getClass().getResource("/xp.jpg"));
+            imagen = imageIcon.getImage();
+            
+            g.drawImage(imagen, 0, 0, getWidth(), getHeight(), this);
+
+            setOpaque(false);
+            try{
+                super.paint(g); 
+            }catch(Exception e){
+                
+            }
+           
+        }
+    }
 }

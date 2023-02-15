@@ -25,6 +25,7 @@ public class Prueba {
         IClientesDAO emple = new ClientesDAO();
         frmInicio frame = new frmInicio(emple);
         frame.setVisible(true);
+        
     }
 
 }

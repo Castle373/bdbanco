@@ -12,12 +12,12 @@ public class Cuenta {
     private String numeroCuenta;
     private String fechaApertura;
     private String estado;
-    private String saldo;
+    private float saldo;
     private String idCliente;
     public Cuenta(){
         
     }
-    public Cuenta(String numeroCuenta, String fechaApertura, String estado, String saldo, String idCliente) {
+    public Cuenta(String numeroCuenta, String fechaApertura, String estado, float saldo, String idCliente) {
         this.numeroCuenta = numeroCuenta;
         this.fechaApertura = fechaApertura;
         this.estado = estado;
@@ -53,11 +53,11 @@ public class Cuenta {
         this.estado = estado;
     }
 
-    public String getSaldo() {
+    public float getSaldo() {
         return saldo;
     }
 
-    public void setSaldo(String saldo) {
+    public void setSaldo(float saldo) {
         this.saldo = saldo;
     }
 
