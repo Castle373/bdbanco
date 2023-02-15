@@ -5,24 +5,59 @@
 package Frames;
 
 import Entidades.Cliente;
+import Entidades.Cuenta;
 import enumeradores.AccionCatalogoEnum;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import persistencia.CuentasDAO;
 import persistencia.IClientesDAO;
+import persistencia.ICuentasDAO;
 
 /**
  *
  * @author diego
  */
 public class frmMenu extends javax.swing.JFrame {
-     IClientesDAO clienteDAO;     
+     IClientesDAO clienteDAO; 
+     ICuentasDAO cuentasDAO;    
      private AccionCatalogoEnum accion;
      Cliente clienteInicio;
+     FondoPanel fondo = new FondoPanel();
     /**
      * Creates new form NewJFrame
      */
-    public frmMenu(IClientesDAO clienteDAO) {
+    public frmMenu(ICuentasDAO cuentasDAO,IClientesDAO clienteDAO,Cliente cliente) {
+        this.cuentasDAO=cuentasDAO;
         this.clienteDAO = clienteDAO;
+        this.clienteInicio= cliente;
+        this.setContentPane(fondo);
         initComponents();
+        lblAviso.setVisible(false);
+        llenarComboBoxCuentas();
+        lblCliente.setText(cliente.getNombres()+" "+cliente.getApellidoPaterno()+" "+cliente.getApellidoMaterno());
+        
+    }
+    
+    public void llenarComboBoxCuentas(){
+        comboBoxCuentas.removeAllItems();
+        List<Cuenta> combo = cuentasDAO.buscarPorIdClienteActivas(clienteInicio.getIdCliente());    
+        if (combo==null) {
+            lblAviso.setVisible(true);
+        }else{
+            lblAviso.setVisible(false);
+            Iterator i = combo.iterator();
+            while(i.hasNext()){
+            Cuenta cuenta = (Cuenta) i.next();
+            this.comboBoxCuentas.addItem(cuenta);
+        }
+        
+        }
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -38,7 +73,6 @@ public class frmMenu extends javax.swing.JFrame {
         jProgressBar1 = new javax.swing.JProgressBar();
         lblDinero = new javax.swing.JLabel();
         btnTransferencia = new javax.swing.JButton();
-        comboBoxCuentas = new javax.swing.JComboBox<>();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -47,6 +81,10 @@ public class frmMenu extends javax.swing.JFrame {
         btnCrearCuenta = new javax.swing.JButton();
         btnRetiro = new javax.swing.JButton();
         BtnRetirarSinCuenta = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        lblCliente = new javax.swing.JLabel();
+        lblAviso = new javax.swing.JLabel();
+        comboBoxCuentas = new javax.swing.JComboBox<>();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -76,14 +114,6 @@ public class frmMenu extends javax.swing.JFrame {
         });
         getContentPane().add(btnTransferencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 270, 160, -1));
 
-        comboBoxCuentas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        comboBoxCuentas.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                comboBoxCuentasActionPerformed(evt);
-            }
-        });
-        getContentPane().add(comboBoxCuentas, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, 160, 30));
-
         jLabel6.setFont(new java.awt.Font("Vani", 1, 48)); // NOI18N
         jLabel6.setText("Cuentas");
         getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 290, 80));
@@ -105,7 +135,7 @@ public class frmMenu extends javax.swing.JFrame {
         ));
         jScrollPane2.setViewportView(tblHistorial);
 
-        getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 170, 370, 190));
+        getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 170, 460, 260));
 
         btnCrearRetiro.setText(" Retiro Sin Cuenta");
         btnCrearRetiro.addActionListener(new java.awt.event.ActionListener() {
@@ -116,6 +146,11 @@ public class frmMenu extends javax.swing.JFrame {
         getContentPane().add(btnCrearRetiro, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 310, 160, -1));
 
         btnCrearCuenta.setText("Crear Cuenta");
+        btnCrearCuenta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCrearCuentaActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnCrearCuenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, -1, -1));
 
         btnRetiro.setText("Retirar Saldo");
@@ -129,6 +164,17 @@ public class frmMenu extends javax.swing.JFrame {
         BtnRetirarSinCuenta.setText("Retirar Sin cuenta");
         getContentPane().add(BtnRetirarSinCuenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 350, 160, -1));
 
+        jLabel1.setText("Nombre:");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 50, -1, -1));
+
+        lblCliente.setText("N");
+        getContentPane().add(lblCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 40, 250, 40));
+
+        lblAviso.setText("No se Encontro Ninguna Cuenta");
+        getContentPane().add(lblAviso, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, 230, 40));
+
+        getContentPane().add(comboBoxCuentas, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, 240, 40));
+
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
@@ -137,10 +183,6 @@ public class frmMenu extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnTransferenciaActionPerformed
 
-    private void comboBoxCuentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBoxCuentasActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_comboBoxCuentasActionPerformed
-
     private void btnCrearRetiroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearRetiroActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnCrearRetiroActionPerformed
@@ -148,6 +190,15 @@ public class frmMenu extends javax.swing.JFrame {
     private void btnRetiroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRetiroActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnRetiroActionPerformed
+
+    private void btnCrearCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearCuentaActionPerformed
+
+            ICuentasDAO CuentasDAO = new CuentasDAO();
+            frmCuenta registro = new frmCuenta(cuentasDAO,accion.NUEVO,clienteInicio);
+            registro.setVisible(true);
+        
+        
+    }//GEN-LAST:event_btnCrearCuentaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -191,14 +242,37 @@ public class frmMenu extends javax.swing.JFrame {
     private javax.swing.JButton btnCrearRetiro;
     private javax.swing.JButton btnRetiro;
     private javax.swing.JButton btnTransferencia;
-    private javax.swing.JComboBox<String> comboBoxCuentas;
+    private javax.swing.JComboBox<Cuenta> comboBoxCuentas;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JProgressBar jProgressBar1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
+    private javax.swing.JLabel lblAviso;
+    private javax.swing.JLabel lblCliente;
     private javax.swing.JLabel lblDinero;
     private javax.swing.JTable tblHistorial;
     // End of variables declaration//GEN-END:variables
+class FondoPanel extends JPanel {
+
+        private Image imagen;
+
+        @Override
+        public void paint(Graphics g) {
+            ImageIcon imageIcon = new javax.swing.ImageIcon(getClass().getResource("/xp.jpg"));
+            imagen = imageIcon.getImage();
+            
+            g.drawImage(imagen, 0, 0, getWidth(), getHeight(), this);
+
+            setOpaque(false);
+            try{
+                super.paint(g); 
+            }catch(Exception e){
+                
+            }
+           
+        }
+    }
 }

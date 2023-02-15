@@ -18,7 +18,12 @@ import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import persistencia.ClientesDAO;
+import persistencia.ConexionBD;
+import persistencia.CuentasDAO;
 import persistencia.IClientesDAO;
+import persistencia.IConexionBD;
+import persistencia.ICuentasDAO;
 
 /**
  *
@@ -226,9 +231,11 @@ public class frmInicio extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRegistroActionPerformed
 
     private void btnIniciarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarSesionActionPerformed
-        if (ValidarCuenta()) {
-         
-
+        if (ValidarCuenta()) { 
+            Cliente cli = this.clienteDAO.buscarPorIdCliente(txtId.getText());
+            ICuentasDAO CuentasDAO = new CuentasDAO();
+            frmMenu registro = new frmMenu(CuentasDAO,this.clienteDAO,cli);
+            registro.setVisible(true);
         }
 
     }//GEN-LAST:event_btnIniciarSesionActionPerformed

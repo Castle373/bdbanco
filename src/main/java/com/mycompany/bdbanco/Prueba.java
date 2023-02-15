@@ -21,10 +21,10 @@ public class Prueba {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-       IConexionBD cone = new ConexionBD();
-       IClientesDAO emple = new ClientesDAO();
-       frmInicio frame = new frmInicio(emple);
-       frame.setVisible(true);
+        IConexionBD cone = new ConexionBD();
+        IClientesDAO emple = new ClientesDAO();
+        frmInicio frame = new frmInicio(emple);
+        frame.setVisible(true);
     }
-    
+
 }

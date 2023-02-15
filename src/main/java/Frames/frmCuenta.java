@@ -4,19 +4,50 @@
  */
 package Frames;
 
+import Entidades.Cliente;
+import Entidades.Cuenta;
+import enumeradores.AccionCatalogoEnum;
+import java.awt.Font;
+import javax.swing.JOptionPane;
+import persistencia.IClientesDAO;
+import persistencia.ICuentasDAO;
+
 /**
  *
  * @author diego
  */
 public class frmCuenta extends javax.swing.JFrame {
-
+    private final Cliente cliente;
+    private final ICuentasDAO ICuentasDAO;
+    private Font font = null;
+    private AccionCatalogoEnum accion;
     /**
      * Creates new form frmCuenta
      */
-    public frmCuenta() {
+    public frmCuenta(ICuentasDAO cuentasDAO,AccionCatalogoEnum accion,Cliente cliente) {
+        this.ICuentasDAO = cuentasDAO;
+        this.accion = accion;
+        this.cliente = cliente;
         initComponents();
     }
+    private Cuenta getCuentaControles(){
+        Cuenta Cuenta = new Cuenta();
+        Cuenta.setIdCliente(cliente.getIdCliente());
+        Cuenta.setSaldo(txtSaldo.getText());  
+        return Cuenta;
+    }
+    private void guardar() {
 
+        Cuenta cuenta = this.ICuentasDAO.guardar(getCuentaControles());      
+        if (cuenta != null) {
+            JOptionPane.showMessageDialog(this, "Se ha Registrado Correctamente",
+                    "Información", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(this, "No fue posible Registrarse",
+                    "Información", JOptionPane.ERROR_MESSAGE);
+        }
+
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -54,6 +85,11 @@ public class frmCuenta extends javax.swing.JFrame {
         getContentPane().add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 220, 80, 30));
 
         btnAceptar.setText("Crear");
+        btnAceptar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAceptarActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnAceptar, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 220, 80, 30));
 
         jLabel3.setText("Cliente:");
@@ -68,6 +104,14 @@ public class frmCuenta extends javax.swing.JFrame {
     private void txtSaldoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSaldoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtSaldoActionPerformed
+
+    private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
+        if (txtSaldo.getText().equals("")){         
+        }else{
+            this.guardar();
+        }
+    
+    }//GEN-LAST:event_btnAceptarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -99,7 +143,7 @@ public class frmCuenta extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new frmCuenta().setVisible(true);
+  //              new frmCuenta().setVisible(true);
             }
         });
     }

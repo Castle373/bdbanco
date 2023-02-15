@@ -8,14 +8,16 @@ package Entidades;
  *
  * @author diego
  */
-public class cuenta {
+public class Cuenta {
     private String numeroCuenta;
     private String fechaApertura;
     private String estado;
     private String saldo;
     private String idCliente;
-
-    public cuenta(String numeroCuenta, String fechaApertura, String estado, String saldo, String idCliente) {
+    public Cuenta(){
+        
+    }
+    public Cuenta(String numeroCuenta, String fechaApertura, String estado, String saldo, String idCliente) {
         this.numeroCuenta = numeroCuenta;
         this.fechaApertura = fechaApertura;
         this.estado = estado;
@@ -23,7 +25,7 @@ public class cuenta {
         this.idCliente = idCliente;
     }
 
-    public cuenta(String numeroCuenta) {
+    public Cuenta(String numeroCuenta) {
         this.numeroCuenta = numeroCuenta;
     }
 
@@ -65,6 +67,11 @@ public class cuenta {
 
     public void setIdCliente(String idCliente) {
         this.idCliente = idCliente;
+    }
+
+    @Override
+    public String toString() {
+        return numeroCuenta;
     }
 
 }
