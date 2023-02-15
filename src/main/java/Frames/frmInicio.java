@@ -102,7 +102,6 @@ public class frmInicio extends javax.swing.JFrame {
         lblContraseña = new javax.swing.JLabel();
         txtId = new javax.swing.JTextField();
         txtContraseña = new javax.swing.JPasswordField();
-        btnActualizarDatos = new javax.swing.JButton();
         btnRegistro = new javax.swing.JButton();
         btnIniciarSesion = new javax.swing.JButton();
 
@@ -123,13 +122,6 @@ public class frmInicio extends javax.swing.JFrame {
         txtId.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtIdKeyTyped(evt);
-            }
-        });
-
-        btnActualizarDatos.setText("Actualiza Datos");
-        btnActualizarDatos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnActualizarDatosActionPerformed(evt);
             }
         });
 
@@ -154,17 +146,14 @@ public class frmInicio extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(53, Short.MAX_VALUE)
                 .addComponent(btnIniciarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(89, 89, 89)
+                .addGap(163, 163, 163)
                 .addComponent(btnRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(159, 159, 159))
+                .addGap(85, 85, 85))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(lblId, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(130, 130, 130)
-                        .addComponent(lblNombre))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(lblContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -173,18 +162,16 @@ public class frmInicio extends javax.swing.JFrame {
                             .addComponent(txtId, javax.swing.GroupLayout.DEFAULT_SIZE, 231, Short.MAX_VALUE)
                             .addComponent(txtContraseña)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(120, 120, 120)
-                        .addComponent(btnActualizarDatos, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(144, 144, 144)
+                        .addComponent(lblNombre)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(47, 47, 47)
-                .addComponent(btnActualizarDatos)
-                .addGap(18, 18, 18)
+                .addGap(82, 82, 82)
                 .addComponent(lblNombre)
-                .addGap(27, 27, 27)
+                .addGap(33, 33, 33)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblId, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -233,20 +220,14 @@ public class frmInicio extends javax.swing.JFrame {
     private void btnIniciarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarSesionActionPerformed
         if (ValidarCuenta()) { 
             Cliente cli = this.clienteDAO.buscarPorIdCliente(txtId.getText());
+            System.out.println(cli.getCiudad());
+            System.out.println(cli.getFechaNacimiento());
             ICuentasDAO CuentasDAO = new CuentasDAO();
             frmMenu registro = new frmMenu(CuentasDAO,this.clienteDAO,cli);
             registro.setVisible(true);
         }
 
     }//GEN-LAST:event_btnIniciarSesionActionPerformed
-
-    private void btnActualizarDatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarDatosActionPerformed
-        if (ValidarCuenta()) {
-            Cliente cli = this.clienteDAO.buscarPorIdCliente(txtId.getText());
-            frmCliente registro = new frmCliente(cli,accion.NUEVO,this.clienteDAO);
-            registro.setVisible(true);
-        }
-    }//GEN-LAST:event_btnActualizarDatosActionPerformed
 
     /**
      * @param args the command line arguments
@@ -284,7 +265,6 @@ public class frmInicio extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnActualizarDatos;
     private javax.swing.JButton btnIniciarSesion;
     private javax.swing.JButton btnRegistro;
     private javax.swing.JLabel lblContraseña;

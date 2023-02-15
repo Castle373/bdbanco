@@ -29,6 +29,7 @@ public class Cliente {
         this.apellidoMaterno = apellidoMaterno;
         this.fechaNacimiento = fechaNacimiento;
         this.colinia = colinia;
+        this.ciudad = ciudad;
         this.calleNumero = calleNumero;
         this.edad=edad;
         this.contra=contra;

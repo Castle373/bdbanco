@@ -43,87 +43,101 @@
     <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
     <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
     <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2"/>
-    <AuxValue name="designerSize" type="java.awt.Dimension" value="-84,-19,0,5,115,114,0,18,106,97,118,97,46,97,119,116,46,68,105,109,101,110,115,105,111,110,65,-114,-39,-41,-84,95,68,20,2,0,2,73,0,6,104,101,105,103,104,116,73,0,5,119,105,100,116,104,120,112,0,0,2,12,0,0,3,28"/>
   </AuxValues>
 
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" attributes="0">
-              <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
-                      <Component id="btnCrearCuenta" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <Component id="jLabel6" min="-2" pref="290" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace min="30" pref="30" max="-2" attributes="0"/>
-              <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
-              <Component id="lblCliente" min="-2" pref="250" max="-2" attributes="0"/>
-          </Group>
-          <Group type="102" attributes="0">
-              <EmptySpace min="20" pref="20" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="lblAviso" min="-2" pref="230" max="-2" attributes="0"/>
-                  <Component id="comboBoxCuentas" min="-2" pref="240" max="-2" attributes="0"/>
-              </Group>
-          </Group>
-          <Group type="102" attributes="0">
-              <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <EmptySpace min="20" pref="20" max="-2" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
+                              <Component id="btnCrearCuenta" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Component id="lblTitulo" alignment="0" min="-2" pref="290" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
-                              <EmptySpace min="40" pref="40" max="-2" attributes="0"/>
-                              <Component id="lblDinero" min="-2" pref="60" max="-2" attributes="0"/>
+                              <Component id="lblNombrePar" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="lblCliente" min="-2" pref="250" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="jLabel7" min="-2" pref="60" max="-2" attributes="0"/>
+                          <Component id="btnActualizarDatos" min="-2" pref="140" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <Component id="btnRetiro" min="-2" pref="160" max="-2" attributes="0"/>
-                  <Component id="btnTransferencia" min="-2" pref="160" max="-2" attributes="0"/>
-                  <Component id="btnCrearRetiro" min="-2" pref="160" max="-2" attributes="0"/>
-                  <Component id="BtnRetirarSinCuenta" min="-2" pref="160" max="-2" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="20" pref="20" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="lblAviso" min="-2" pref="230" max="-2" attributes="0"/>
+                          <Component id="comboBoxCuentas" min="-2" pref="240" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="btnRetiro" min="-2" pref="160" max="-2" attributes="0"/>
+                                  <Component id="btnTransferencia" min="-2" pref="160" max="-2" attributes="0"/>
+                                  <Component id="btnCrearRetiro" min="-2" pref="160" max="-2" attributes="0"/>
+                                  <Component id="BtnRetirarSinCuenta" min="-2" pref="160" max="-2" attributes="0"/>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
+                                      <Component id="btnCancelarCuenta" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
+                              <Component id="lblSaldo" min="-2" pref="60" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="lblDinero" min="-2" pref="60" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
+                      <Component id="jScrollPane2" min="-2" pref="460" max="-2" attributes="0"/>
+                  </Group>
               </Group>
-              <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
-              <Component id="jScrollPane2" min="-2" pref="460" max="-2" attributes="0"/>
+              <EmptySpace pref="116" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" attributes="0">
-              <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <EmptySpace min="70" pref="70" max="-2" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="lblTitulo" min="-2" pref="80" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Component id="btnCrearCuenta" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="15" pref="15" max="-2" attributes="0"/>
+                      <Component id="lblAviso" min="-2" pref="40" max="-2" attributes="0"/>
                   </Group>
-                  <Component id="jLabel6" min="-2" pref="80" max="-2" attributes="0"/>
-                  <Group type="102" attributes="0">
-                      <EmptySpace min="40" pref="40" max="-2" attributes="0"/>
-                      <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" attributes="0">
-                      <EmptySpace min="30" pref="30" max="-2" attributes="0"/>
-                      <Component id="lblCliente" min="-2" pref="40" max="-2" attributes="0"/>
-                  </Group>
-              </Group>
-              <EmptySpace min="15" pref="15" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="lblAviso" min="-2" pref="40" max="-2" attributes="0"/>
-                  <Component id="comboBoxCuentas" min="-2" pref="40" max="-2" attributes="0"/>
-              </Group>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="lblDinero" min="-2" pref="40" max="-2" attributes="0"/>
-                          <Component id="jLabel7" min="-2" pref="40" max="-2" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="lblNombrePar" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblCliente" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="30" pref="30" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="btnActualizarDatos" min="-2" max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="comboBoxCuentas" min="-2" pref="40" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="lblSaldo" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
+                          <Component id="lblDinero" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
                       <Component id="btnRetiro" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="15" pref="15" max="-2" attributes="0"/>
                       <Component id="btnTransferencia" min="-2" max="-2" attributes="0"/>
@@ -131,12 +145,12 @@
                       <Component id="btnCrearRetiro" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="15" pref="15" max="-2" attributes="0"/>
                       <Component id="BtnRetirarSinCuenta" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="btnCancelarCuenta" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <Group type="102" attributes="0">
-                      <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
-                      <Component id="jScrollPane2" min="-2" pref="260" max="-2" attributes="0"/>
-                  </Group>
+                  <Component id="jScrollPane2" alignment="0" min="-2" pref="260" max="-2" attributes="0"/>
               </Group>
+              <EmptySpace pref="12" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -145,31 +159,35 @@
     <Component class="javax.swing.JLabel" name="lblDinero">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Vani" size="14" style="1"/>
+          <Font name="Century Schoolbook" size="14" style="1"/>
         </Property>
         <Property name="text" type="java.lang.String" value=":"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="btnTransferencia">
       <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="ff" green="af" red="95" type="rgb"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Transferir"/>
+        <Property name="focusPainted" type="boolean" value="false"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnTransferenciaActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel6">
+    <Component class="javax.swing.JLabel" name="lblTitulo">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Vani" size="48" style="1"/>
+          <Font name="Century Schoolbook" size="48" style="1"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Cuentas"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel7">
+    <Component class="javax.swing.JLabel" name="lblSaldo">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Vani" size="14" style="1"/>
+          <Font name="Century Schoolbook" size="18" style="1"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Saldo"/>
       </Properties>
@@ -197,7 +215,11 @@
     </Container>
     <Component class="javax.swing.JButton" name="btnCrearRetiro">
       <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="ff" green="af" red="95" type="rgb"/>
+        </Property>
         <Property name="text" type="java.lang.String" value=" Retiro Sin Cuenta"/>
+        <Property name="focusPainted" type="boolean" value="false"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCrearRetiroActionPerformed"/>
@@ -205,7 +227,11 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnCrearCuenta">
       <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="ff" green="af" red="95" type="rgb"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Crear Cuenta"/>
+        <Property name="focusPainted" type="boolean" value="false"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCrearCuentaActionPerformed"/>
@@ -213,7 +239,11 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnRetiro">
       <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="ff" green="af" red="95" type="rgb"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Retirar Saldo"/>
+        <Property name="focusPainted" type="boolean" value="false"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnRetiroActionPerformed"/>
@@ -221,16 +251,26 @@
     </Component>
     <Component class="javax.swing.JButton" name="BtnRetirarSinCuenta">
       <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="ff" green="af" red="95" type="rgb"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Retirar Sin cuenta"/>
+        <Property name="focusPainted" type="boolean" value="false"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel1">
+    <Component class="javax.swing.JLabel" name="lblNombrePar">
       <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Century Schoolbook" size="18" style="1"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Nombre:"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lblCliente">
       <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Century Schoolbook" size="18" style="1"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="N"/>
       </Properties>
     </Component>
@@ -245,9 +285,33 @@
           <StringArray count="0"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="comboBoxCuentasActionPerformed"/>
+      </Events>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;Cuenta&gt;"/>
       </AuxValues>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnActualizarDatos">
+      <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="ff" green="af" red="95" type="rgb"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Actualiza Datos"/>
+        <Property name="focusPainted" type="boolean" value="false"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnActualizarDatosActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnCancelarCuenta">
+      <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="0" green="0" red="99" type="rgb"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Cancelar Cuenta"/>
+        <Property name="focusPainted" type="boolean" value="false"/>
+      </Properties>
     </Component>
   </SubComponents>
 </Form>

@@ -17,6 +17,7 @@ public class Cuenta {
     public Cuenta(){
         
     }
+    
     public Cuenta(String numeroCuenta, String fechaApertura, String estado, float saldo, String idCliente) {
         this.numeroCuenta = numeroCuenta;
         this.fechaApertura = fechaApertura;
