@@ -220,8 +220,6 @@ public class frmInicio extends javax.swing.JFrame {
     private void btnIniciarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarSesionActionPerformed
         if (ValidarCuenta()) { 
             Cliente cli = this.clienteDAO.buscarPorIdCliente(txtId.getText());
-            System.out.println(cli.getCiudad());
-            System.out.println(cli.getFechaNacimiento());
             ICuentasDAO CuentasDAO = new CuentasDAO();
             frmMenu registro = new frmMenu(CuentasDAO,this.clienteDAO,cli);
             registro.setVisible(true);

@@ -380,7 +380,6 @@ public class frmCliente extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Hay Espacios en Blanco!!!!!","Informacion",JOptionPane.ERROR_MESSAGE);
         }else{
         if (accion==accion.EDITAR) {
-            System.out.println("entro");
             editar();
         }
         if (accion==accion.ELIMINAR) { 
