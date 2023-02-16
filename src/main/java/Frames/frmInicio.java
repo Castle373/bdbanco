@@ -5,6 +5,7 @@
 package Frames;
 
 import Entidades.Cliente;
+import com.mycompany.bdbanco.Encriptacion;
 import enumeradores.AccionCatalogoEnum;
 import java.awt.Color;
 import java.awt.Font;
@@ -54,6 +55,7 @@ public class frmInicio extends javax.swing.JFrame {
     }
     public boolean ValidarCuenta(){
         String id = txtId.getText();
+         Encriptacion a=new Encriptacion();
         String contra = txtContraseña.getText();
         clienteInicio = new Cliente(id,contra);
         if (clienteDAO.InicioSesionCliente(clienteInicio)==null) {
