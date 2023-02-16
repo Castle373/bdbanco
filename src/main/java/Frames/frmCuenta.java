@@ -121,6 +121,11 @@ public class frmCuenta extends javax.swing.JFrame {
                 txtSaldoActionPerformed(evt);
             }
         });
+        txtSaldo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtSaldoKeyTyped(evt);
+            }
+        });
 
         lblTitulo.setText("Crear Cuenta");
 
@@ -200,6 +205,21 @@ public class frmCuenta extends javax.swing.JFrame {
         }
     
     }//GEN-LAST:event_btnAceptarActionPerformed
+
+    private void txtSaldoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSaldoKeyTyped
+  int key = evt.getKeyChar();
+
+    boolean numeros = key >= 48 && key <= 57;
+        
+    if (!numeros)
+    {
+        evt.consume();
+    }
+
+    if (txtSaldo.getText().trim().length() == 10) {
+        evt.consume();
+    }
+    }//GEN-LAST:event_txtSaldoKeyTyped
 
     /**
      * @param args the command line arguments

@@ -95,7 +95,28 @@ public class ClientesDAO implements IClientesDAO{
         }
       return clienteEncontrado;
     }
-
+    @Override
+    public String buscarid(String usuario,String contrasenia) {
+        String id = null;
+        try {
+            Connection conex = this.conexion.crearConexion();
+            Statement comandoSQL = conex.createStatement();
+            String querySql= "Select * From Cliente WHERE nombres ='"+usuario+"' and "+"contrasena="+contrasenia;
+             ResultSet resultado = comandoSQL.executeQuery(querySql);
+             
+             if(resultado.next()){
+                 String idCliente = resultado.getString("idCliente");
+                 id=idCliente;
+         }
+            
+        conex.close();
+        return id;
+        } catch (SQLException ex) {
+            Logger.getLogger(ClientesDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+      return id;
+    }
     @Override
     public Cliente guardar(Cliente cliente) {      
         try {

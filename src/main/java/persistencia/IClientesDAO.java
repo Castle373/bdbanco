@@ -16,6 +16,7 @@ public interface IClientesDAO {
   public List<Cliente> ListaClienteNombre();
   public Cliente InicioSesionCliente(Cliente cliente);
   public Cliente buscarPorIdCliente(String Cliente);
+    public String buscarid(String usuario,String contrasenia);
   public Cliente guardar(Cliente cliente);
   public Cliente editar(Cliente cliente);
   public Cliente eliminar(Cliente cliente);
