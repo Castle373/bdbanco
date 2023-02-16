@@ -55,18 +55,32 @@ public class frmInicio extends javax.swing.JFrame {
     }
     public boolean ValidarCuenta(){
         String id = txtId.getText();
-         Encriptacion a=new Encriptacion();
+        Encriptacion a=new Encriptacion();
         String contra = txtContraseña.getText();
-        clienteInicio = new Cliente(id,contra);
-        if (clienteDAO.InicioSesionCliente(clienteInicio)==null) {
-             JOptionPane.showMessageDialog(this, "El id o la Contraseña son incorrectas",
-                    "Información", JOptionPane.INFORMATION_MESSAGE);
-            return false;
+        
+        clienteInicio = new Cliente(id);
+        Cliente cli = clienteDAO.buscarPorIdCliente(id);
+        if (cli!=null) {
             
-        }
-        JOptionPane.showMessageDialog(this, "Inicio de sesion Correccto",
+            try {
+                String contraBase = cli.getContra();
+                
+
+                if (contraBase==contra) {
+                    JOptionPane.showMessageDialog(this, "Inicio de sesion Correccto",
                     "Información", JOptionPane.INFORMATION_MESSAGE);
-       return true;
+                     return true;
+                }
+                
+            } catch (Exception ex) {
+                Logger.getLogger(frmInicio.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
+            JOptionPane.showMessageDialog(this, "El id o la Contraseña son incorrectas",
+                    "Información", JOptionPane.INFORMATION_MESSAGE);          
+            return false;  
+        
     }
     public void crearFont() throws FontFormatException, IOException{
         //Creacion de Fuentes

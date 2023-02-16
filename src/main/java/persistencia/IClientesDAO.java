@@ -5,6 +5,7 @@
 package persistencia;
 
 import Entidades.Cliente;
+import java.sql.Connection;
 import java.util.List;
 
 /**
@@ -16,7 +17,8 @@ public interface IClientesDAO {
   public List<Cliente> ListaClienteNombre();
   public Cliente InicioSesionCliente(Cliente cliente);
   public Cliente buscarPorIdCliente(String Cliente);
-    public String buscarid(String usuario,String apellido,String colonia);
+  //public String buscarid(String usuario,String apellido,String colonia);
+  public String buscarid(Connection conexi);
   public Cliente guardar(Cliente cliente);
   public Cliente editar(Cliente cliente);
   public Cliente eliminar(Cliente cliente);

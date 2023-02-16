@@ -55,7 +55,7 @@ public class CuentasDAO implements ICuentasDAO{
 
     @Override
     public Cuenta buscarPorNumeroCuenta(String Cuenta) {
-        Cuenta cuentaEncontrado = new Cuenta();
+        Cuenta cuentaEncontrado = null;
         try {
             Connection conex = this.conexion.crearConexion();
             Statement comandoSQL = conex.createStatement();
