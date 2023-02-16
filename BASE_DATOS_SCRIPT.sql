@@ -3,6 +3,7 @@ USE bdbanco;
 CREATE TABLE Cliente (
   idCliente int NOT NULL AUTO_INCREMENT,
   nombres varchar(60) NOT NULL,
+   contrasena varchar(40) NOT NULL,
   apellidoPaterno varchar(30) NOT NULL,
   apellidoMaterno varchar(30) NOT NULL,
   edad int,

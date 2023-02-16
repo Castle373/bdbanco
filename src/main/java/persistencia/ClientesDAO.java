@@ -5,6 +5,7 @@
 package persistencia;
 
 import Entidades.Cliente;
+import com.mycompany.bdbanco.Encriptacion;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -95,9 +96,35 @@ public class ClientesDAO implements IClientesDAO{
         }
       return clienteEncontrado;
     }
-
     @Override
-    public Cliente guardar(Cliente cliente) {      
+    public String buscarid(String usuario,String apellido,String colonia) {
+        String id = null;
+        try {
+            Connection conex = this.conexion.crearConexion();
+            Statement comandoSQL = conex.createStatement();
+            String querySql= "Select * From Cliente WHERE nombres ='"+usuario+"' and "+"colinia= '"+colonia+"' and "+"apellidoPaterno= '"+apellido+"'";
+             ResultSet resultado = comandoSQL.executeQuery(querySql);
+             
+             if(resultado.next()){
+                 String idCliente = resultado.getString("idCliente");
+                 id=idCliente;
+         }
+            
+        conex.close();
+        return id;
+        } catch (SQLException ex) {
+            Logger.getLogger(ClientesDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+      return id;
+    }
+    @Override
+    public Cliente guardar(Cliente cliente) { 
+    String contra;
+    contra=cliente.getContra();
+        Encriptacion a=new Encriptacion();
+        
+        System.out.println(contra);
         try {
             Connection conex = this.conexion.crearConexion();
             Statement comando = conex.createStatement();
@@ -110,7 +137,7 @@ public class ClientesDAO implements IClientesDAO{
                     cliente.getCiudad(),
                     cliente.getColinia(),
                     cliente.getCalleNumero(),
-                    cliente.getContra()
+                     a.cifra(contra)
                     );
             
             comando.executeUpdate(codigo);
@@ -118,6 +145,8 @@ public class ClientesDAO implements IClientesDAO{
         } catch (SQLException ex) {
             Logger.getLogger(ClientesDAO.class.getName()).log(Level.SEVERE, null, ex);
             return null;
+        } catch (Exception ex) {
+            Logger.getLogger(ClientesDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
       return cliente;
     }

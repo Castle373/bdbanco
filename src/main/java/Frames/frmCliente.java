@@ -13,6 +13,8 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.io.IOException;
 import java.io.InputStream;
+import java.sql.Connection;
+import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
@@ -109,11 +111,13 @@ public class frmCliente extends javax.swing.JFrame {
         cliente.setContra(txtContraseña.getText());       
         return cliente;
     }
+
     private void guardar() {
 
         Cliente clienteGuardar = this.iClienteDAO.guardar(getClienteControles());      
         if (clienteGuardar != null) {
-            JOptionPane.showMessageDialog(this, "Se ha Registrado Correctamente",
+            String id = this.iClienteDAO.buscarid(txtNombre.getText(),txtApellidoP.getText(),txtColonia.getText());  
+            JOptionPane.showMessageDialog(this, "Se ha Registrado Correctamente, tu id es: "+id,
                     "Información", JOptionPane.INFORMATION_MESSAGE);
         } else {
             JOptionPane.showMessageDialog(this, "No fue posible Registrarse",
@@ -386,6 +390,7 @@ public class frmCliente extends javax.swing.JFrame {
            eliminar();
         }
         if (accion==accion.NUEVO) {
+            
             guardar();
      
         }
