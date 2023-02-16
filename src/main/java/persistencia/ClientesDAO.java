@@ -97,12 +97,12 @@ public class ClientesDAO implements IClientesDAO{
       return clienteEncontrado;
     }
     @Override
-    public String buscarid(String usuario,String contrasenia) {
+    public String buscarid(String usuario,String apellido,String colonia) {
         String id = null;
         try {
             Connection conex = this.conexion.crearConexion();
             Statement comandoSQL = conex.createStatement();
-            String querySql= "Select * From Cliente WHERE nombres ='"+usuario+"' and "+"contrasena="+contrasenia;
+            String querySql= "Select * From Cliente WHERE nombres ='"+usuario+"' and "+"colinia= '"+colonia+"' and "+"apellidoPaterno= '"+apellido+"'";
              ResultSet resultado = comandoSQL.executeQuery(querySql);
              
              if(resultado.next()){

@@ -116,7 +116,7 @@ public class frmCliente extends javax.swing.JFrame {
 
         Cliente clienteGuardar = this.iClienteDAO.guardar(getClienteControles());      
         if (clienteGuardar != null) {
-            String id = this.iClienteDAO.buscarid(txtNombre.getText(),txtContraseña.getText());  
+            String id = this.iClienteDAO.buscarid(txtNombre.getText(),txtApellidoP.getText(),txtColonia.getText());  
             JOptionPane.showMessageDialog(this, "Se ha Registrado Correctamente, tu id es: "+id,
                     "Información", JOptionPane.INFORMATION_MESSAGE);
         } else {
