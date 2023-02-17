@@ -25,15 +25,17 @@ import persistencia.CuentasDAO;
 import persistencia.IClientesDAO;
 import persistencia.IConexionBD;
 import persistencia.ICuentasDAO;
+import persistencia.IRetiroSinCuentaDAO;
+import persistencia.RetiroSinCuentaDAO;
 
 /**
  *
  * @author diego
  */
 public class frmInicio extends javax.swing.JFrame {
-    IClientesDAO clienteDAO;     
-     private AccionCatalogoEnum accion;
-     Cliente clienteInicio;
+      IClientesDAO clienteDAO;     
+      private AccionCatalogoEnum accion;
+      Cliente clienteInicio;
       FondoPanel fondo = new FondoPanel();
       private Font font = null;
     /**
@@ -59,22 +61,12 @@ public class frmInicio extends javax.swing.JFrame {
         String contra = txtContraseña.getText();
         
         clienteInicio = new Cliente(id);
-        Cliente cli = clienteDAO.buscarPorIdCliente(id);
+        clienteInicio.setContra(contra);
+        clienteInicio.setIdCliente(id);
+        Cliente cli = clienteDAO.InicioSesionCliente(clienteInicio);
         if (cli!=null) {
+            return true; 
             
-            try {
-                String contraBase = cli.getContra();
-                
-
-                if (contraBase==contra) {
-                    JOptionPane.showMessageDialog(this, "Inicio de sesion Correccto",
-                    "Información", JOptionPane.INFORMATION_MESSAGE);
-                     return true;
-                }
-                
-            } catch (Exception ex) {
-                Logger.getLogger(frmInicio.class.getName()).log(Level.SEVERE, null, ex);
-            }
         }
         
             JOptionPane.showMessageDialog(this, "El id o la Contraseña son incorrectas",
@@ -120,6 +112,7 @@ public class frmInicio extends javax.swing.JFrame {
         txtContraseña = new javax.swing.JPasswordField();
         btnRegistro = new javax.swing.JButton();
         btnIniciarSesion = new javax.swing.JButton();
+        btnRetirarSinCuenta = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(51, 51, 255));
@@ -155,16 +148,25 @@ public class frmInicio extends javax.swing.JFrame {
             }
         });
 
+        btnRetirarSinCuenta.setText("Retirar Sin Cuenta");
+        btnRetirarSinCuenta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRetirarSinCuentaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(53, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnIniciarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(163, 163, 163)
+                .addGap(45, 45, 45)
                 .addComponent(btnRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(85, 85, 85))
+                .addGap(57, 57, 57)
+                .addComponent(btnRetirarSinCuenta)
+                .addGap(73, 73, 73))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -178,16 +180,16 @@ public class frmInicio extends javax.swing.JFrame {
                             .addComponent(txtId, javax.swing.GroupLayout.DEFAULT_SIZE, 231, Short.MAX_VALUE)
                             .addComponent(txtContraseña)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(144, 144, 144)
+                        .addGap(150, 150, 150)
                         .addComponent(lblNombre)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(82, 82, 82)
+                .addGap(74, 74, 74)
                 .addComponent(lblNombre)
-                .addGap(33, 33, 33)
+                .addGap(41, 41, 41)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblId, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -198,7 +200,8 @@ public class frmInicio extends javax.swing.JFrame {
                 .addGap(40, 40, 40)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnIniciarSesion)
-                    .addComponent(btnRegistro))
+                    .addComponent(btnRegistro)
+                    .addComponent(btnRetirarSinCuenta))
                 .addContainerGap(87, Short.MAX_VALUE))
         );
 
@@ -243,6 +246,14 @@ public class frmInicio extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnIniciarSesionActionPerformed
 
+    private void btnRetirarSinCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRetirarSinCuentaActionPerformed
+   
+        IRetiroSinCuentaDAO retiroSinCuentaDAO= new RetiroSinCuentaDAO();
+        frmRetiroSinCuenta retriroSinCuenta = new frmRetiroSinCuenta(clienteDAO,retiroSinCuentaDAO);
+        retriroSinCuenta.setVisible(true);
+        
+    }//GEN-LAST:event_btnRetirarSinCuentaActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -281,6 +292,7 @@ public class frmInicio extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnIniciarSesion;
     private javax.swing.JButton btnRegistro;
+    private javax.swing.JButton btnRetirarSinCuenta;
     private javax.swing.JLabel lblContraseña;
     private javax.swing.JLabel lblId;
     private javax.swing.JLabel lblNombre;

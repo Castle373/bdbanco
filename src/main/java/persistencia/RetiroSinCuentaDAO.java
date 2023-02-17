@@ -35,6 +35,8 @@ public class RetiroSinCuentaDAO implements IRetiroSinCuentaDAO{
                     retiroSinCuenta.getContraseña()
                     );
             
+            System.out.println(codigo);
+            
             comando.executeUpdate(codigo);
             conex.close();
         } catch (SQLException ex) {
