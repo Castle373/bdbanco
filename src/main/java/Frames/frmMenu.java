@@ -210,6 +210,11 @@ public class frmMenu extends javax.swing.JFrame {
         btnCancelarCuenta.setBackground(new java.awt.Color(153, 0, 0));
         btnCancelarCuenta.setText("Cancelar Cuenta");
         btnCancelarCuenta.setFocusPainted(false);
+        btnCancelarCuenta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarCuentaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -336,6 +341,10 @@ public class frmMenu extends javax.swing.JFrame {
             registro.setVisible(true);
         
     }//GEN-LAST:event_btnActualizarDatosActionPerformed
+
+    private void btnCancelarCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarCuentaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnCancelarCuentaActionPerformed
 
     /**
      * @param args the command line arguments
