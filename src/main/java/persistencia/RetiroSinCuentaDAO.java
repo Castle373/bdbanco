@@ -30,7 +30,7 @@ public class RetiroSinCuentaDAO implements IRetiroSinCuentaDAO{
             Connection conex = this.conexion.crearConexion();
             Statement comando = conex.createStatement();
             String codigo= String.format("INSERT INTO RetiroSinCuenta (numeroCuenta,cantidad,contraseña)"
-                    + "VALUES ('%s','%s','%s')",
+                    + "VALUES ('%s','%s','%d')",
                     retiroSinCuenta.getNumeroCuenta(),
                     retiroSinCuenta.getCantidad(),
                     retiroSinCuenta.getContraseña()
@@ -39,6 +39,7 @@ public class RetiroSinCuentaDAO implements IRetiroSinCuentaDAO{
             System.out.println(codigo);
             
             comando.executeUpdate(codigo);
+            retiroSinCuenta.setFolio(buscarid(conex));        
             conex.close();
         } catch (SQLException ex) {
             Logger.getLogger(ClientesDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -46,7 +47,25 @@ public class RetiroSinCuentaDAO implements IRetiroSinCuentaDAO{
         }
       return retiroSinCuenta;
     }
-
+    public String buscarid(Connection conexi) {
+        String id = null;
+        try {
+            Connection conex = conexi;
+            Statement comandoSQL = conex.createStatement();
+            String querySql= "select LAST_INSERT_ID()";
+             ResultSet resultado = comandoSQL.executeQuery(querySql);
+             
+             if(resultado.next()){
+                 String folio = resultado.getString("LAST_INSERT_ID()");
+                 id=folio;
+         }
+        return id;
+        } catch (SQLException ex) {
+            Logger.getLogger(ClientesDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+      return id;
+    }
     @Override
     public RetiroSinCuenta PorFolioContra(RetiroSinCuenta retiroSinCuenta) {
         

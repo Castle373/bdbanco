@@ -22,10 +22,13 @@ public class RetiroSinCuenta {
     public RetiroSinCuenta(){
   
     }
-    public RetiroSinCuenta(String numeroCuenta, String cantidad) {
+
+    public RetiroSinCuenta(String numeroCuenta, String cantidad, int contraseña) {
         this.numeroCuenta = numeroCuenta;
         this.cantidad = cantidad;
+        this.contraseña = contraseña;
     }
+ 
 
     public RetiroSinCuenta(String folio, int contraseña) {
         this.folio = folio;

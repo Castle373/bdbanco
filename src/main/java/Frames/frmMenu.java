@@ -19,16 +19,18 @@ import javax.swing.JPanel;
 import persistencia.CuentasDAO;
 import persistencia.IClientesDAO;
 import persistencia.ICuentasDAO;
+import persistencia.IRetiroSinCuentaDAO;
+import persistencia.RetiroSinCuentaDAO;
 
 /**
  *
  * @author diego
  */
 public class frmMenu extends javax.swing.JFrame {
-     IClientesDAO clienteDAO; 
-     ICuentasDAO cuentasDAO;    
+     private IClientesDAO clienteDAO; 
+     private ICuentasDAO cuentasDAO;    
      private AccionCatalogoEnum accion;
-     Cliente clienteInicio;
+     private Cliente clienteInicio;
      FondoPanel fondo = new FondoPanel();
     /**
      * Creates new form NewJFrame
@@ -51,8 +53,10 @@ public class frmMenu extends javax.swing.JFrame {
         List<Cuenta> combo = cuentasDAO.buscarPorIdClienteActivas(clienteInicio.getIdCliente());    
         if (combo==null) {
             lblAviso.setVisible(true);
+            
         }else{
             lblAviso.setVisible(false);
+            
             Iterator i = combo.iterator();
             while(i.hasNext()){
             Cuenta cuenta = (Cuenta) i.next();
@@ -63,8 +67,6 @@ public class frmMenu extends javax.swing.JFrame {
         crearFont();
     }
     public void crearFont(){
-
-        
         //Colocar Colores A Label
         lblDinero.setForeground(Color.black);
         lblCliente.setForeground(Color.black);
@@ -343,7 +345,12 @@ public class frmMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCancelarCuentaActionPerformed
 
     private void BtnRetirarSinCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnRetirarSinCuentaActionPerformed
-        // TODO add your handling code here:
+        IRetiroSinCuentaDAO RetiroSinCuentaDAO = new RetiroSinCuentaDAO();
+        Cuenta cuentaSeleccionada = (Cuenta) comboBoxCuentas.getSelectedItem();
+        frmRetiro creaRetiro = new frmRetiro(RetiroSinCuentaDAO,cuentaSeleccionada,clienteInicio);
+        creaRetiro.setVisible(true);
+        this.dispose();
+    
     }//GEN-LAST:event_BtnRetirarSinCuentaActionPerformed
 
     private void BtnRetirarSinCuenta1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnRetirarSinCuenta1ActionPerformed

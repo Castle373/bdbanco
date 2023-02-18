@@ -182,6 +182,8 @@ public class frmRetiroSinCuenta extends javax.swing.JFrame {
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         if (retirar()) {
+            frmInicio inicio = new frmInicio(clienteDAO);
+            inicio.setVisible(true);
            this.dispose();
         }
         

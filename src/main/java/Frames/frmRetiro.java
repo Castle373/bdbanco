@@ -4,26 +4,67 @@
  */
 package Frames;
 
+import Entidades.Cliente;
+import Entidades.Cuenta;
+import Entidades.RetiroSinCuenta;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.util.Random;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import persistencia.ClientesDAO;
+import persistencia.CuentasDAO;
+import persistencia.IClientesDAO;
+import persistencia.ICuentasDAO;
+import persistencia.IRetiroSinCuentaDAO;
 
 /**
  *
  * @author diego
  */
 public class frmRetiro extends javax.swing.JFrame {
+    private IRetiroSinCuentaDAO RetiroSinCuentaDAO;
+    private Cliente cliente;
+    private Cuenta cuenta;
     FondoPanel fondo = new FondoPanel();
     /**
      * Creates new form frmRetiro
      */
-    public frmRetiro() {
+    public frmRetiro(IRetiroSinCuentaDAO RetiroSinCuentaDAO,Cuenta cuenta,Cliente cliente) {
+        this.RetiroSinCuentaDAO = RetiroSinCuentaDAO;
+        this.cliente=cliente;
+        this.cuenta=cuenta;
         this.setContentPane(fondo);
-        initComponents();
-        
+        initComponents();        
+        lblNumeroCuenta.setText("Numero de Cuenta: "+cuenta.getNumeroCuenta());
     }
-
+    public boolean crearRetiro(){
+        if (txtCantidad.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "El Campo esta Vacio", "Informacion", JOptionPane.WARNING_MESSAGE);
+            return false;
+        }
+        RetiroSinCuenta retiro = new RetiroSinCuenta(); 
+        Random random = new Random();
+        int randomNum = random.nextInt(90000000) + 10000000;
+        retiro.setContraseña(randomNum);
+        retiro.setCantidad(txtCantidad.getText());
+        retiro.setNumeroCuenta(cuenta.getNumeroCuenta());
+        float retiroCantidad = Float.parseFloat(txtCantidad.getText());
+        if (cuenta.getSaldo()<retiroCantidad) {
+          JOptionPane.showMessageDialog(this, "El Saldo de la Cuenta es Insuficiente para crear el Retiro", "Informacion", JOptionPane.WARNING_MESSAGE);
+            return false ;
+        }
+        RetiroSinCuenta retiroGuardar = RetiroSinCuentaDAO.guardar(retiro);
+        if (retiroGuardar==null) {
+            JOptionPane.showMessageDialog(this, "No se Pudo Realizar el Retiro", "Informacion", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }else{
+            JOptionPane.showMessageDialog(this, "Retiro Creado Su Folio Es "+retiroGuardar.getFolio()+" Y Contraseña Es: "+retiro.getContraseña(), "Retiro Creado", JOptionPane.INFORMATION_MESSAGE);
+            return true;
+        }
+       
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -39,10 +80,17 @@ public class frmRetiro extends javax.swing.JFrame {
         Retiro = new javax.swing.JLabel();
         btnAceptar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
+        lblNumeroCuenta = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setFont(new java.awt.Font("Century Schoolbook", 1, 18)); // NOI18N
+        txtCantidad.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCantidadKeyTyped(evt);
+            }
+        });
+
+        jLabel1.setFont(new java.awt.Font("Century Schoolbook", 1, 14)); // NOI18N
         jLabel1.setText("Cantidad");
 
         Retiro.setFont(new java.awt.Font("Century Schoolbook", 1, 36)); // NOI18N
@@ -56,6 +104,14 @@ public class frmRetiro extends javax.swing.JFrame {
         });
 
         btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
+
+        lblNumeroCuenta.setFont(new java.awt.Font("Century Schoolbook", 1, 14)); // NOI18N
+        lblNumeroCuenta.setText("Numero de Cuenta");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -65,35 +121,40 @@ public class frmRetiro extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(110, 110, 110)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(50, 50, 50)
-                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(20, 20, 20)
-                                .addComponent(txtCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(btnCancelar)
                                 .addGap(167, 167, 167)
-                                .addComponent(btnAceptar))))
+                                .addComponent(btnAceptar))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(9, 9, 9)
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(61, 61, 61)
+                                .addComponent(txtCantidad))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(139, 139, 139)
-                        .addComponent(Retiro, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(117, Short.MAX_VALUE))
+                        .addComponent(Retiro, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(54, 54, 54)
+                        .addComponent(lblNumeroCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, 473, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(61, 61, 61)
                 .addComponent(Retiro, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(37, 37, 37)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(80, 80, 80)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblNumeroCuenta, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE))
+                .addGap(41, 41, 41)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnCancelar)
                     .addComponent(btnAceptar))
-                .addContainerGap(89, Short.MAX_VALUE))
+                .addContainerGap(94, Short.MAX_VALUE))
         );
 
         pack();
@@ -101,11 +162,29 @@ public class frmRetiro extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-
-        
-        
-        // TODO add your handling code here:
+ crearRetiro();
+ 
     }//GEN-LAST:event_btnAceptarActionPerformed
+
+    private void txtCantidadKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCantidadKeyTyped
+    int key = evt.getKeyChar();
+
+        boolean numeros = key >= 48 && key <= 57;
+
+        if (!numeros)
+        {
+            evt.consume();
+
+        }    
+    }//GEN-LAST:event_txtCantidadKeyTyped
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+    IClientesDAO clienteDAO = new ClientesDAO();
+    ICuentasDAO cuentasDAO= new CuentasDAO();
+    frmMenu frm = new frmMenu(cuentasDAO,clienteDAO,cliente);
+    frm.setVisible(true);
+    this.dispose();
+    }//GEN-LAST:event_btnCancelarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -137,7 +216,7 @@ public class frmRetiro extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new frmRetiro().setVisible(true);
+              //  new frmRetiro().setVisible(true);
             }
         });
     }
@@ -148,6 +227,7 @@ public class frmRetiro extends javax.swing.JFrame {
     private javax.swing.JButton btnCancelar;
     private com.toedter.calendar.JDayChooser jDayChooser2;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel lblNumeroCuenta;
     private javax.swing.JTextField txtCantidad;
     // End of variables declaration//GEN-END:variables
 class FondoPanel extends JPanel {
