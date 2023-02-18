@@ -14,4 +14,5 @@ import java.util.List;
 public interface IRetiroSinCuentaDAO {
     public RetiroSinCuenta guardar(RetiroSinCuenta retiroSinCuenta);
     public RetiroSinCuenta PorFolioContra(RetiroSinCuenta retiroSinCuenta);
+    public void ProcedimientoRetirar(RetiroSinCuenta retiroSinCuenta);
 }

@@ -5,6 +5,7 @@
 package persistencia;
 
 import Entidades.RetiroSinCuenta;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -53,18 +54,18 @@ public class RetiroSinCuentaDAO implements IRetiroSinCuentaDAO{
         try {
             Connection conex = this.conexion.crearConexion();
             Statement comandoSQL = conex.createStatement();
-            String querySql= "Select * From Cuenta WHERE folio ='"+retiroSinCuenta.getFolio()+"' and contraseña='"+retiroSinCuenta.getContraseña()+"'";
+            String querySql= "Select * From RetiroSinCuenta WHERE folio ='"+retiroSinCuenta.getFolio()+"' and contraseña='"+retiroSinCuenta.getContraseña()+"'";
              ResultSet resultado = comandoSQL.executeQuery(querySql);
              
              if(resultado.next()){
                  String folio = resultado.getString("folio");
                  String numeroCuenta = resultado.getString("numeroCuenta");
                  String cantidad = resultado.getString("cantidad");
-                 String contraseña = resultado.getString("contraseña");  
+                 int contraseña = resultado.getInt("contraseña");  
                  String estado = resultado.getString("estado");  
                  String fechaHora = resultado.getString("fechaHora");  
                  String fechaHoraRetirado = resultado.getString("fechaHoraRetirado");  
-                 String fechaHoraLimite = resultado.getString("fechaHoraLimite");  
+             String fechaHoraLimite = resultado.getString("fechaHoraLimite");  
                  cuentaEncontrado = new RetiroSinCuenta(folio,numeroCuenta,cantidad,estado,contraseña
                                                         ,fechaHora,fechaHoraRetirado,fechaHoraLimite);       
 
@@ -76,5 +77,19 @@ public class RetiroSinCuentaDAO implements IRetiroSinCuentaDAO{
         }
       return cuentaEncontrado;
     }
+
+    @Override
+    public void ProcedimientoRetirar(RetiroSinCuenta retiroSinCuenta) {
+    try {
+        Connection conex = this.conexion.crearConexion();
+        CallableStatement cs = conex.prepareCall("{call realizarRetiroSinCuenta(?,?)}");
+        cs.setInt(1, Integer.parseInt(retiroSinCuenta.getFolio()));
+        cs.setInt(2, retiroSinCuenta.getContraseña());
+        cs.execute();
+        conex.close();
+    } catch (SQLException ex) {
+        Logger.getLogger(ClientesDAO.class.getName()).log(Level.SEVERE, null, ex);
+    }
+}
     
 }

@@ -4,9 +4,11 @@
  */
 package Frames;
 
+import Entidades.RetiroSinCuenta;
 import java.awt.Graphics;
 import java.awt.Image;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import persistencia.IClientesDAO;
 import persistencia.IRetiroSinCuentaDAO;
@@ -28,7 +30,43 @@ public class frmRetiroSinCuenta extends javax.swing.JFrame {
         this.setContentPane(fondo);
         initComponents();
     }
-
+    public boolean retirar(){
+        
+        String folio = txtFolio.getText();
+        int contraseña = Integer.parseInt(txtContraseña.getText());
+        RetiroSinCuenta retiro = new RetiroSinCuenta(folio,contraseña);
+        if (retiroSinCuentaDAO.PorFolioContra(retiro)==null) {
+             JOptionPane.showMessageDialog(this, "Retiro Invalido",
+                    "Información", JOptionPane.INFORMATION_MESSAGE);
+             return false;
+        }else{
+            if (retiroSinCuentaDAO.PorFolioContra(retiro).getEstado().equalsIgnoreCase("COBRADO")) {
+                JOptionPane.showMessageDialog(this, "Este Retiro Ya fue Cobrado",
+                    "Información", JOptionPane.INFORMATION_MESSAGE);
+                return false;
+            }else{
+                retiroSinCuentaDAO.ProcedimientoRetirar(retiro);
+                
+                if (retiroSinCuentaDAO.PorFolioContra(retiro).getEstado().equalsIgnoreCase("CADUCADO")) {
+                JOptionPane.showMessageDialog(this, "Este Retiro esta Caducado",
+                    "Información", JOptionPane.INFORMATION_MESSAGE);
+                return false;
+                }
+                
+                if (retiroSinCuentaDAO.PorFolioContra(retiro).getEstado().equalsIgnoreCase("INSUFICIENTE")) {
+                JOptionPane.showMessageDialog(this, "La Cuenta No Tiene Suficiente Dinero",
+                    "Información", JOptionPane.INFORMATION_MESSAGE);
+                return false;
+                }
+                if (retiroSinCuentaDAO.PorFolioContra(retiro).getEstado().equalsIgnoreCase("COBRADO")) {
+                JOptionPane.showMessageDialog(this, "Retiro Exitoso",
+                    "Información", JOptionPane.INFORMATION_MESSAGE);
+                return true;
+                }
+            }
+        }
+        return false;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -47,6 +85,12 @@ public class frmRetiroSinCuenta extends javax.swing.JFrame {
         btnAceptar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        txtFolio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtFolioActionPerformed(evt);
+            }
+        });
 
         jLabel4.setFont(new java.awt.Font("Century Schoolbook", 1, 18)); // NOI18N
         jLabel4.setText("Contraseña:");
@@ -126,17 +170,28 @@ public class frmRetiroSinCuenta extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-    frmInicio inicio = new frmInicio(clienteDAO);
-    inicio.setVisible(true);
-    this.dispose();
+    int opcion = JOptionPane.showConfirmDialog(this, "¿Quieres Volver Al Menu?", "Confirmacion", JOptionPane.OK_CANCEL_OPTION,JOptionPane.WARNING_MESSAGE);
+        if (opcion!=0) {
+            
+        }else{
+            frmInicio inicio = new frmInicio(clienteDAO);
+            inicio.setVisible(true);
+            this.dispose();
+        }
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-     
+        if (retirar()) {
+           this.dispose();
+        }
         
         
         
     }//GEN-LAST:event_btnAceptarActionPerformed
+
+    private void txtFolioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFolioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtFolioActionPerformed
 
     /**
      * @param args the command line arguments

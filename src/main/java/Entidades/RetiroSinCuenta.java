@@ -13,7 +13,7 @@ public class RetiroSinCuenta {
     private String numeroCuenta;
     private String cantidad;
     private String estado;
-    private String contraseña;
+    private int contraseña;
     private String fechaHora;
     private String fechaHoraRetirado;
     private String fechaHoraLimite;
@@ -26,8 +26,13 @@ public class RetiroSinCuenta {
         this.numeroCuenta = numeroCuenta;
         this.cantidad = cantidad;
     }
+
+    public RetiroSinCuenta(String folio, int contraseña) {
+        this.folio = folio;
+        this.contraseña = contraseña;
+    }
    
-    public RetiroSinCuenta(String folio, String numeroCuenta, String cantidad, String estado, String contraseña, String fechaHora, String fechaHoraRetirado, String fechaHoraLimite) {
+    public RetiroSinCuenta(String folio, String numeroCuenta, String cantidad, String estado, int contraseña, String fechaHora, String fechaHoraRetirado, String fechaHoraLimite) {
         this.folio = folio;
         this.numeroCuenta = numeroCuenta;
         this.cantidad = cantidad;
@@ -70,11 +75,11 @@ public class RetiroSinCuenta {
         this.estado = estado;
     }
 
-    public String getContraseña() {
+    public int getContraseña() {
         return contraseña;
     }
 
-    public void setContraseña(String contraseña) {
+    public void setContraseña(int contraseña) {
         this.contraseña = contraseña;
     }
 

@@ -242,6 +242,7 @@ public class frmInicio extends javax.swing.JFrame {
             ICuentasDAO CuentasDAO = new CuentasDAO();
             frmMenu registro = new frmMenu(CuentasDAO,this.clienteDAO,cli);
             registro.setVisible(true);
+            this.dispose();
         }
 
     }//GEN-LAST:event_btnIniciarSesionActionPerformed
@@ -251,6 +252,7 @@ public class frmInicio extends javax.swing.JFrame {
         IRetiroSinCuentaDAO retiroSinCuentaDAO= new RetiroSinCuentaDAO();
         frmRetiroSinCuenta retriroSinCuenta = new frmRetiroSinCuenta(clienteDAO,retiroSinCuentaDAO);
         retriroSinCuenta.setVisible(true);
+        this.dispose();
         
     }//GEN-LAST:event_btnRetirarSinCuentaActionPerformed
 

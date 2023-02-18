@@ -41,6 +41,7 @@ public class frmMenu extends javax.swing.JFrame {
         initComponents();
         lblAviso.setVisible(false);
         llenarComboBoxCuentas();
+        
         lblCliente.setText(cliente.getNombres()+" "+cliente.getApellidoPaterno()+" "+cliente.getApellidoMaterno());
         
     }
@@ -71,10 +72,8 @@ public class frmMenu extends javax.swing.JFrame {
         lblNombrePar.setForeground(Color.black);
         lblSaldo.setForeground(Color.black);
         btnActualizarDatos.setForeground(Color.black);
-        btnRetiro.setForeground(Color.black);
         btnTransferencia.setForeground(Color.black);
         btnCrearCuenta.setForeground(Color.black);
-        btnCrearRetiro.setForeground(Color.black);
         BtnRetirarSinCuenta.setForeground(Color.black);
         btnCancelarCuenta.setForeground(Color.black);
     }
@@ -96,9 +95,7 @@ public class frmMenu extends javax.swing.JFrame {
         lblSaldo = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblHistorial = new javax.swing.JTable();
-        btnCrearRetiro = new javax.swing.JButton();
         btnCrearCuenta = new javax.swing.JButton();
-        btnRetiro = new javax.swing.JButton();
         BtnRetirarSinCuenta = new javax.swing.JButton();
         lblNombrePar = new javax.swing.JLabel();
         lblCliente = new javax.swing.JLabel();
@@ -106,6 +103,7 @@ public class frmMenu extends javax.swing.JFrame {
         comboBoxCuentas = new javax.swing.JComboBox<>();
         btnActualizarDatos = new javax.swing.JButton();
         btnCancelarCuenta = new javax.swing.JButton();
+        BtnRetirarSinCuenta1 = new javax.swing.JButton();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -150,17 +148,19 @@ public class frmMenu extends javax.swing.JFrame {
             new String [] {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
-        ));
-        jScrollPane2.setViewportView(tblHistorial);
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
 
-        btnCrearRetiro.setBackground(new java.awt.Color(149, 175, 255));
-        btnCrearRetiro.setText(" Retiro Sin Cuenta");
-        btnCrearRetiro.setFocusPainted(false);
-        btnCrearRetiro.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCrearRetiroActionPerformed(evt);
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
             }
         });
+        tblHistorial.setRequestFocusEnabled(false);
+        tblHistorial.setRowSelectionAllowed(false);
+        tblHistorial.getTableHeader().setReorderingAllowed(false);
+        jScrollPane2.setViewportView(tblHistorial);
 
         btnCrearCuenta.setBackground(new java.awt.Color(149, 175, 255));
         btnCrearCuenta.setText("Crear Cuenta");
@@ -171,18 +171,14 @@ public class frmMenu extends javax.swing.JFrame {
             }
         });
 
-        btnRetiro.setBackground(new java.awt.Color(149, 175, 255));
-        btnRetiro.setText("Retirar Saldo");
-        btnRetiro.setFocusPainted(false);
-        btnRetiro.addActionListener(new java.awt.event.ActionListener() {
+        BtnRetirarSinCuenta.setBackground(new java.awt.Color(149, 175, 255));
+        BtnRetirarSinCuenta.setText("Crear Retiro Sin cuenta");
+        BtnRetirarSinCuenta.setFocusPainted(false);
+        BtnRetirarSinCuenta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRetiroActionPerformed(evt);
+                BtnRetirarSinCuentaActionPerformed(evt);
             }
         });
-
-        BtnRetirarSinCuenta.setBackground(new java.awt.Color(149, 175, 255));
-        BtnRetirarSinCuenta.setText("Retirar Sin cuenta");
-        BtnRetirarSinCuenta.setFocusPainted(false);
 
         lblNombrePar.setFont(new java.awt.Font("Century Schoolbook", 1, 18)); // NOI18N
         lblNombrePar.setText("Nombre:");
@@ -216,6 +212,15 @@ public class frmMenu extends javax.swing.JFrame {
             }
         });
 
+        BtnRetirarSinCuenta1.setBackground(new java.awt.Color(255, 153, 51));
+        BtnRetirarSinCuenta1.setText("Salir");
+        BtnRetirarSinCuenta1.setFocusPainted(false);
+        BtnRetirarSinCuenta1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnRetirarSinCuenta1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -226,22 +231,24 @@ public class frmMenu extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(10, 10, 10)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(btnRetiro, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(btnTransferencia, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(btnCrearRetiro, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(BtnRetirarSinCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(26, 26, 26)
+                                        .addComponent(btnCancelarCuenta))
                                     .addGroup(layout.createSequentialGroup()
                                         .addGap(16, 16, 16)
-                                        .addComponent(btnCancelarCuenta))))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(16, 16, 16)
-                                .addComponent(lblSaldo, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lblDinero, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(10, 10, 10)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 460, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(lblSaldo, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(lblDinero, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(28, 28, 28))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(BtnRetirarSinCuenta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(btnTransferencia, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 460, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(BtnRetirarSinCuenta1, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addGroup(layout.createSequentialGroup()
@@ -258,7 +265,7 @@ public class frmMenu extends javax.swing.JFrame {
                         .addComponent(lblNombrePar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lblCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(123, Short.MAX_VALUE))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -276,24 +283,26 @@ public class frmMenu extends javax.swing.JFrame {
                 .addComponent(lblAviso, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(comboBoxCuentas, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblSaldo, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblDinero, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(19, 19, 19)
-                        .addComponent(btnRetiro)
-                        .addGap(15, 15, 15)
-                        .addComponent(btnTransferencia)
-                        .addGap(15, 15, 15)
-                        .addComponent(btnCrearRetiro)
-                        .addGap(15, 15, 15)
-                        .addComponent(BtnRetirarSinCuenta)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnCancelarCuenta))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(12, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(lblSaldo, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lblDinero, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(35, 35, 35)
+                                .addComponent(btnTransferencia)
+                                .addGap(18, 18, 18)
+                                .addComponent(BtnRetirarSinCuenta)
+                                .addGap(77, 77, 77)
+                                .addComponent(btnCancelarCuenta))
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(BtnRetirarSinCuenta1, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(64, 64, 64))))
         );
 
         pack();
@@ -303,19 +312,6 @@ public class frmMenu extends javax.swing.JFrame {
     private void btnTransferenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTransferenciaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnTransferenciaActionPerformed
-
-    private void btnCrearRetiroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearRetiroActionPerformed
-    
-        
-        
-        
-    }//GEN-LAST:event_btnCrearRetiroActionPerformed
-
-    private void btnRetiroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRetiroActionPerformed
-    
-        
-        
-    }//GEN-LAST:event_btnRetiroActionPerformed
 
     private void btnCrearCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearCuentaActionPerformed
 
@@ -345,6 +341,26 @@ public class frmMenu extends javax.swing.JFrame {
     private void btnCancelarCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarCuentaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnCancelarCuentaActionPerformed
+
+    private void BtnRetirarSinCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnRetirarSinCuentaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_BtnRetirarSinCuentaActionPerformed
+
+    private void BtnRetirarSinCuenta1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnRetirarSinCuenta1ActionPerformed
+   
+    int opcion = JOptionPane.showConfirmDialog(this, "¿Quieres Volver Al Menu?", "Confirmacion", JOptionPane.OK_CANCEL_OPTION,JOptionPane.WARNING_MESSAGE);
+        if (opcion!=0) {
+            
+        }else{
+            frmInicio inicio = new frmInicio(clienteDAO);
+            inicio.setVisible(true);
+            this.dispose();
+        }
+        
+        
+        
+        
+    }//GEN-LAST:event_BtnRetirarSinCuenta1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -384,11 +400,10 @@ public class frmMenu extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BtnRetirarSinCuenta;
+    private javax.swing.JButton BtnRetirarSinCuenta1;
     private javax.swing.JButton btnActualizarDatos;
     private javax.swing.JButton btnCancelarCuenta;
     private javax.swing.JButton btnCrearCuenta;
-    private javax.swing.JButton btnCrearRetiro;
-    private javax.swing.JButton btnRetiro;
     private javax.swing.JButton btnTransferencia;
     private javax.swing.JComboBox<Cuenta> comboBoxCuentas;
     private javax.swing.JProgressBar jProgressBar1;
