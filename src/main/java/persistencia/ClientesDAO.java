@@ -194,12 +194,18 @@ public class ClientesDAO implements IClientesDAO{
     }
 
     @Override
+<<<<<<< HEAD
     public Cliente InicioSesionCliente(Cliente cliente) {  
+=======
+    public Cliente InicioSesionCliente(Cliente cliente) {
+         Encriptacion a=new Encriptacion();
+>>>>>>> a3bc7c1f5314d950810c2ebafebc141538e3fac5
         Cliente clienteEncontrado=null;
         try {
             Connection conex = this.conexion.crearConexion();
             Statement comandoSQL = conex.createStatement();
-            String querySql= "Select * From Cliente WHERE idCliente ='"+cliente.getIdCliente()+"' and contrasena='"+cliente.getContra()+"'";
+  
+            String querySql= "Select * From Cliente WHERE idCliente ='"+cliente.getIdCliente()+"'";
              ResultSet resultado = comandoSQL.executeQuery(querySql);
              
              if(resultado.next()){

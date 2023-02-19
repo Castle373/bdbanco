@@ -35,7 +35,7 @@ import persistencia.RetiroSinCuentaDAO;
 public class frmInicio extends javax.swing.JFrame {
       IClientesDAO clienteDAO;     
       private AccionCatalogoEnum accion;
-      Cliente clienteInicio;
+      Cliente clienteInicio,cliente2;
       FondoPanel fondo = new FondoPanel();
       private Font font = null;
     /**
@@ -235,6 +235,7 @@ public class frmInicio extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRegistroActionPerformed
 
     private void btnIniciarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarSesionActionPerformed
+<<<<<<< HEAD
         if (ValidarCuenta()) { 
             
             Cliente cli = this.clienteDAO.buscarPorIdCliente(txtId.getText());
@@ -243,6 +244,26 @@ public class frmInicio extends javax.swing.JFrame {
             registro.setVisible(true);
             this.dispose();
         }
+=======
+          Encriptacion a=new Encriptacion();
+        cliente2=clienteDAO.buscarPorIdCliente(txtId.getText());
+        
+        byte[] hola = cliente2.getContra().getBytes();
+          try {
+              if(a.descifra(hola)==txtContraseña.getText()) {
+                  
+                  if (ValidarCuenta()) {
+                      Cliente cli = this.clienteDAO.buscarPorIdCliente(txtId.getText());
+                      ICuentasDAO CuentasDAO = new CuentasDAO();
+                      frmMenu registro = new frmMenu(CuentasDAO,this.clienteDAO,cli);
+                      registro.setVisible(true);
+                      this.dispose();
+                  }
+              }      } catch (Exception ex) {
+              Logger.getLogger(frmInicio.class.getName()).log(Level.SEVERE, null, ex);
+          }
+          
+>>>>>>> a3bc7c1f5314d950810c2ebafebc141538e3fac5
 
     }//GEN-LAST:event_btnIniciarSesionActionPerformed
 
