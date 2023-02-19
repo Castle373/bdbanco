@@ -4,18 +4,56 @@
  */
 package Frames;
 
+import Entidades.Cliente;
+import Entidades.Cuenta;
+import Entidades.Transferencia;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import persistencia.ClientesDAO;
+import persistencia.ConexionBD;
+import persistencia.CuentasDAO;
+import persistencia.IClientesDAO;
+import persistencia.ICuentasDAO;
+import persistencia.IRetiroSinCuentaDAO;
+import persistencia.ITransferenciaDAO;
+
 /**
  *
  * @author diego
  */
 public class frmTranferir extends javax.swing.JFrame {
-
+    IClientesDAO clienteDAO;
+    IRetiroSinCuentaDAO TransferenciaDAO;
+    ICuentasDAO CuentasDAO;
+    ITransferenciaDAO Transferencia;
+    private float sueldoresta,sueldosuma;
+      private Cuenta cuenta;
     /**
      * Creates new form frmTranferir
      */
-    public frmTranferir() {
+    public frmTranferir(ITransferenciaDAO TransferenciaDAO,Cuenta cuenta,Cliente cliente) {
         initComponents();
+   
+       lblNumeroCuenta.setText("Numero de Cuenta: "+cuenta.getNumeroCuenta());
     }
+    
+   public boolean operacion(){
+       if(cuenta.getSaldo()>Float.valueOf(txtCantidad.getText())){
+        if(CuentasDAO.buscarPorNumeroCuenta(txtNumeroCuentaEnvio.getText())!=null) {
+            sueldoresta=cuenta.getSaldo()-Float.valueOf(txtCantidad.getText());
+            
+          Transferencia.Operacion(sueldoresta, sueldosuma, (Transferencia) Transferencia, txtNumeroCuentaEnvio.getText());
+        }
+       }
+        return false;
+   }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -26,6 +64,7 @@ public class frmTranferir extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        lblNumeroCuenta = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         txtCantidad = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
@@ -35,20 +74,24 @@ public class frmTranferir extends javax.swing.JFrame {
         btnCancelar = new javax.swing.JButton();
         txtNumeroCuentaEnvio = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
+        lblNumeroCuenta1 = new javax.swing.JLabel();
+
+        lblNumeroCuenta.setFont(new java.awt.Font("Century Schoolbook", 1, 14)); // NOI18N
+        lblNumeroCuenta.setText("Numero de Cuenta");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setText("Transferencia");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 30, 70, 30));
-        getContentPane().add(txtCantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 160, 80, 30));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 10, 70, 30));
+        getContentPane().add(txtCantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 200, 80, 30));
 
         jLabel3.setText("Cantidad");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 160, 150, 30));
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 200, 150, 30));
 
         jLabel6.setText("Numero De Cuenta");
-        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 80, 140, 20));
-        getContentPane().add(txtNumeroCuenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 80, 100, 20));
+        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 120, 140, 20));
+        getContentPane().add(txtNumeroCuenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 120, 100, 20));
 
         btnAceptar.setText("Aceptar");
         btnAceptar.addActionListener(new java.awt.event.ActionListener() {
@@ -56,7 +99,7 @@ public class frmTranferir extends javax.swing.JFrame {
                 btnAceptarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnAceptar, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 230, -1, -1));
+        getContentPane().add(btnAceptar, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 270, -1, -1));
 
         btnCancelar.setText("Cancelar");
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
@@ -64,57 +107,38 @@ public class frmTranferir extends javax.swing.JFrame {
                 btnCancelarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 230, -1, -1));
-        getContentPane().add(txtNumeroCuentaEnvio, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 110, 100, -1));
+        getContentPane().add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 270, -1, -1));
+        getContentPane().add(txtNumeroCuentaEnvio, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 150, 100, -1));
 
         jLabel4.setText("Numero De Cuenta A Enviar");
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 110, 150, 20));
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 150, 150, 20));
+
+        lblNumeroCuenta1.setFont(new java.awt.Font("Century Schoolbook", 1, 14)); // NOI18N
+        lblNumeroCuenta1.setText("Numero de Cuenta");
+        getContentPane().add(lblNumeroCuenta1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-        // TODO add your handling code here:
+operacion();
     }//GEN-LAST:event_btnAceptarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        // TODO add your handling code here:
+         int opcion = JOptionPane.showConfirmDialog(this, "¿Quieres Volver Al Menu?", "Confirmacion", JOptionPane.OK_CANCEL_OPTION,JOptionPane.WARNING_MESSAGE);
+        if (opcion!=0) {
+            
+        }else{
+            frmInicio inicio = new frmInicio(clienteDAO);
+            inicio.setVisible(true);
+            this.dispose();
+        }   // TODO add your handling code here:
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(frmTranferir.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(frmTranferir.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(frmTranferir.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(frmTranferir.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new frmTranferir().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptar;
@@ -123,6 +147,8 @@ public class frmTranferir extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel lblNumeroCuenta;
+    private javax.swing.JLabel lblNumeroCuenta1;
     private javax.swing.JTextField txtCantidad;
     private javax.swing.JTextField txtNumeroCuenta;
     private javax.swing.JTextField txtNumeroCuentaEnvio;

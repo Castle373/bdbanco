@@ -20,6 +20,7 @@ import persistencia.CuentasDAO;
 import persistencia.IClientesDAO;
 import persistencia.ICuentasDAO;
 import persistencia.IRetiroSinCuentaDAO;
+import persistencia.ITransferenciaDAO;
 import persistencia.RetiroSinCuentaDAO;
 
 /**
@@ -31,10 +32,14 @@ public class frmMenu extends javax.swing.JFrame {
      private ICuentasDAO cuentasDAO;    
      private AccionCatalogoEnum accion;
      private Cliente clienteInicio;
+     public String Numcuenta;
      FondoPanel fondo = new FondoPanel();
     /**
      * Creates new form NewJFrame
      */
+     public frmMenu() {
+     }
+     
     public frmMenu(ICuentasDAO cuentasDAO,IClientesDAO clienteDAO,Cliente cliente) {
         this.cuentasDAO=cuentasDAO;
         this.clienteDAO = clienteDAO;
@@ -312,7 +317,7 @@ public class frmMenu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnTransferenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTransferenciaActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_btnTransferenciaActionPerformed
 
     private void btnCrearCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearCuentaActionPerformed
