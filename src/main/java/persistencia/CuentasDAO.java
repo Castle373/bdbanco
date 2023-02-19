@@ -69,6 +69,7 @@ public class CuentasDAO implements ICuentasDAO{
                  float saldo = resultado.getFloat("saldo");
                  String idCliente = resultado.getString("idCliente");  
                  cuentaEncontrado = new Cuenta(numeroCuenta,fechaApertura,estado,saldo,idCliente);       
+              
 
          }
         conex.close();

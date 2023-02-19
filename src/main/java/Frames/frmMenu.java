@@ -24,7 +24,9 @@ import persistencia.IClientesDAO;
 import persistencia.ICuentasDAO;
 import persistencia.IHistorialDAO;
 import persistencia.IRetiroSinCuentaDAO;
+import persistencia.ITransferenciaDAO;
 import persistencia.RetiroSinCuentaDAO;
+import persistencia.TransferenciaDAO;
 
 /**
  *
@@ -36,10 +38,14 @@ public class frmMenu extends javax.swing.JFrame {
      private IHistorialDAO HistorialDAO ;
      private AccionCatalogoEnum accion;
      private Cliente clienteInicio;
+     public String Numcuenta;
      FondoPanel fondo = new FondoPanel();
     /**
      * Creates new form NewJFrame
      */
+     public frmMenu() {
+     }
+     
     public frmMenu(ICuentasDAO cuentasDAO,IClientesDAO clienteDAO,Cliente cliente) {
         this.cuentasDAO=cuentasDAO;
         this.clienteDAO = clienteDAO;
@@ -443,7 +449,11 @@ public class frmMenu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnTransferenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTransferenciaActionPerformed
-        // TODO add your handling code here:
+ITransferenciaDAO Transferencia = new TransferenciaDAO();
+        Cuenta cuentaSeleccionada = (Cuenta) comboBoxCuentas.getSelectedItem();
+        frmTranferir f=new frmTranferir(Transferencia,cuentaSeleccionada,clienteInicio,cuentasDAO);
+f.setVisible(true);
+this.dispose();
     }//GEN-LAST:event_btnTransferenciaActionPerformed
 
     private void btnCrearCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearCuentaActionPerformed
