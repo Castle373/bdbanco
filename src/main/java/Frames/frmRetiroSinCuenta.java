@@ -45,8 +45,7 @@ public class frmRetiroSinCuenta extends javax.swing.JFrame {
                     "Información", JOptionPane.INFORMATION_MESSAGE);
                 return false;
             }else{
-                retiroSinCuentaDAO.ProcedimientoRetirar(retiro);
-                
+                retiroSinCuentaDAO.ProcedimientoRetirar(retiro);             
                 if (retiroSinCuentaDAO.PorFolioContra(retiro).getEstado().equalsIgnoreCase("CADUCADO")) {
                 JOptionPane.showMessageDialog(this, "Este Retiro esta Caducado",
                     "Información", JOptionPane.INFORMATION_MESSAGE);

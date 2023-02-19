@@ -4,6 +4,7 @@
  */
 package Frames;
 
+import ClasesUtilidad.Historial;
 import Entidades.Cliente;
 import Entidades.Cuenta;
 import enumeradores.AccionCatalogoEnum;
@@ -16,9 +17,12 @@ import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
 import persistencia.CuentasDAO;
+import persistencia.HistorialDAO;
 import persistencia.IClientesDAO;
 import persistencia.ICuentasDAO;
+import persistencia.IHistorialDAO;
 import persistencia.IRetiroSinCuentaDAO;
 import persistencia.RetiroSinCuentaDAO;
 
@@ -29,6 +33,7 @@ import persistencia.RetiroSinCuentaDAO;
 public class frmMenu extends javax.swing.JFrame {
      private IClientesDAO clienteDAO; 
      private ICuentasDAO cuentasDAO;    
+     private IHistorialDAO HistorialDAO ;
      private AccionCatalogoEnum accion;
      private Cliente clienteInicio;
      FondoPanel fondo = new FondoPanel();
@@ -42,10 +47,9 @@ public class frmMenu extends javax.swing.JFrame {
         this.setContentPane(fondo);
         initComponents();
         lblAviso.setVisible(false);
-        llenarComboBoxCuentas();
-        
+        HistorialDAO= new HistorialDAO();
         lblCliente.setText(cliente.getNombres()+" "+cliente.getApellidoPaterno()+" "+cliente.getApellidoMaterno());
-        
+        llenarComboBoxCuentas();
     }
     
     public void llenarComboBoxCuentas(){
@@ -53,16 +57,28 @@ public class frmMenu extends javax.swing.JFrame {
         List<Cuenta> combo = cuentasDAO.buscarPorIdClienteActivas(clienteInicio.getIdCliente());    
         if (combo==null) {
             lblAviso.setVisible(true);
-            
+            BtnRetirarSinCuenta.setEnabled(false);
+            btnCancelarCuenta.setEnabled(false);
+            btnTransferencia.setEnabled(false);
+            btnHistorial.setEnabled(false);
+            btnHistorialSinCuenta.setEnabled(false);
+            btnHistorialTrans.setEnabled(false);
         }else{
             lblAviso.setVisible(false);
+            BtnRetirarSinCuenta.setEnabled(true);
+            btnCancelarCuenta.setEnabled(true);
+            btnTransferencia.setEnabled(true);
+            btnHistorial.setEnabled(true);
+            btnHistorialSinCuenta.setEnabled(true);
+            btnHistorialTrans.setEnabled(true);
             
             Iterator i = combo.iterator();
             while(i.hasNext()){
             Cuenta cuenta = (Cuenta) i.next();
+            
             this.comboBoxCuentas.addItem(cuenta);
         }
-        
+            modeloHistorialTodo(Integer.parseInt(cuentaCombo().getNumeroCuenta()));
         }
         crearFont();
     }
@@ -78,6 +94,98 @@ public class frmMenu extends javax.swing.JFrame {
         btnCrearCuenta.setForeground(Color.black);
         BtnRetirarSinCuenta.setForeground(Color.black);
         btnCancelarCuenta.setForeground(Color.black);
+    }
+    public void modeloHistorialRetiro(int NumeroCuenta){
+        DefaultTableModel defa = new DefaultTableModel();
+        tblHistorial.setModel(defa);
+        defa.addColumn("FOLIO");
+        defa.addColumn("CANTIDAD");
+        defa.addColumn("FECHA REALIZADO");
+        defa.addColumn("FECHA COBRADO");
+        defa.addColumn("ESTADO");
+        if (HistorialDAO.HistorialRetiroSinCuenta(NumeroCuenta)==null) {
+            
+        }else{
+            Object[] datos = new Object[defa.getColumnCount()];
+            for (Historial historial:HistorialDAO.HistorialRetiroSinCuenta(NumeroCuenta)) {
+               datos[0]=historial.getFolio();
+               datos[1]=historial.getCantidad();
+               datos[2]=historial.getFechaHora();
+               datos[3]=historial.getFechaHoraRetirado();
+               datos[4]=historial.getEstado();
+               defa.addRow(datos);
+        }
+        }
+    }
+    public void modeloHistorialTransaccion(int NumeroCuenta){
+        DefaultTableModel defa = new DefaultTableModel();
+        tblHistorial.setModel(defa);
+        defa.addColumn("NUMERO CUENTA ENVIO");
+        defa.addColumn("CANTIDAD");
+        defa.addColumn("FECHA REALIZADO");
+        if (HistorialDAO.HistorialTransacciones(NumeroCuenta)==null) {
+            
+        }else{
+            Object[] datos = new Object[defa.getColumnCount()];
+            for (Historial historial:HistorialDAO.HistorialTransacciones(NumeroCuenta)) {
+               datos[0]=historial.getNumeroCuentaEnvio();
+               datos[1]=historial.getCantidad();
+               datos[2]=historial.getFechaHora();
+               defa.addRow(datos);
+        }
+        }
+    }
+    public void modeloHistorialTodo(int NumeroCuenta){
+        DefaultTableModel defa = new DefaultTableModel();
+        tblHistorial.setModel(defa);
+        defa.addColumn("CANTIDAD");
+        defa.addColumn("FECHA REALIZADO");
+        defa.addColumn("TIPO");
+        if (HistorialDAO.HistorialRetiroSinCuenta(NumeroCuenta)==null) {
+            
+        }else{
+            Object[] datos = new Object[defa.getColumnCount()];
+            for (Historial historial:HistorialDAO.HistorialRetiroSinCuenta(NumeroCuenta)) {
+               datos[0]=historial.getCantidad();
+               datos[1]=historial.getFechaHora();
+               datos[2]="Retiro Sin Cuenta";
+               defa.addRow(datos);
+            }      
+        }
+        if (HistorialDAO.HistorialTransacciones(NumeroCuenta)==null) {
+            
+        }else{
+            Object[] datos = new Object[defa.getColumnCount()];
+            for (Historial historial:HistorialDAO.HistorialTransacciones(NumeroCuenta)) {
+               datos[0]=historial.getCantidad();
+               datos[1]=historial.getFechaHora();
+               datos[2]="Transaccion";
+               defa.addRow(datos);
+             }     
+        }
+    }
+    public Cuenta cuentaCombo(){
+        Cuenta cuentaSeleccionada = (Cuenta) comboBoxCuentas.getSelectedItem();
+        if(cuentaSeleccionada==null){
+            return null;
+        }
+        return cuentaSeleccionada;
+    }
+    
+    public boolean cancelarCuenta(){
+        if (cuentaCombo()==null) {
+            return false; 
+        }
+        if (cuentasDAO.editarEstado(cuentaCombo())==null) {
+            JOptionPane.showMessageDialog(this, "No Se Pudo Eliminar La Cuenta",
+                    "Información", JOptionPane.INFORMATION_MESSAGE);  
+        }else{
+            JOptionPane.showMessageDialog(this, "Cuenta "+cuentaCombo().getNumeroCuenta()+" Cancelada",
+                    "Información", JOptionPane.INFORMATION_MESSAGE);  
+        }
+        llenarComboBoxCuentas();
+        
+        return false;
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -105,7 +213,10 @@ public class frmMenu extends javax.swing.JFrame {
         comboBoxCuentas = new javax.swing.JComboBox<>();
         btnActualizarDatos = new javax.swing.JButton();
         btnCancelarCuenta = new javax.swing.JButton();
-        BtnRetirarSinCuenta1 = new javax.swing.JButton();
+        btnSalir = new javax.swing.JButton();
+        btnHistorial = new javax.swing.JButton();
+        btnHistorialSinCuenta = new javax.swing.JButton();
+        btnHistorialTrans = new javax.swing.JButton();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -142,23 +253,15 @@ public class frmMenu extends javax.swing.JFrame {
 
         tblHistorial.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {},
+                {},
+                {},
+                {}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false
-            };
 
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
             }
-        });
+        ));
         tblHistorial.setRequestFocusEnabled(false);
         tblHistorial.setRowSelectionAllowed(false);
         tblHistorial.getTableHeader().setReorderingAllowed(false);
@@ -214,12 +317,33 @@ public class frmMenu extends javax.swing.JFrame {
             }
         });
 
-        BtnRetirarSinCuenta1.setBackground(new java.awt.Color(255, 153, 51));
-        BtnRetirarSinCuenta1.setText("Salir");
-        BtnRetirarSinCuenta1.setFocusPainted(false);
-        BtnRetirarSinCuenta1.addActionListener(new java.awt.event.ActionListener() {
+        btnSalir.setBackground(new java.awt.Color(255, 153, 51));
+        btnSalir.setText("Salir");
+        btnSalir.setFocusPainted(false);
+        btnSalir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BtnRetirarSinCuenta1ActionPerformed(evt);
+                btnSalirActionPerformed(evt);
+            }
+        });
+
+        btnHistorial.setText("Historial General");
+        btnHistorial.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHistorialActionPerformed(evt);
+            }
+        });
+
+        btnHistorialSinCuenta.setText("Historial Retiros Sin Cuenta");
+        btnHistorialSinCuenta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHistorialSinCuentaActionPerformed(evt);
+            }
+        });
+
+        btnHistorialTrans.setText("Historial Transacciones");
+        btnHistorialTrans.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHistorialTransActionPerformed(evt);
             }
         });
 
@@ -230,27 +354,6 @@ public class frmMenu extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(31, 31, 31)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(26, 26, 26)
-                                        .addComponent(btnCancelarCuenta))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(16, 16, 16)
-                                        .addComponent(lblSaldo, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(lblDinero, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(28, 28, 28))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(BtnRetirarSinCuenta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(btnTransferencia, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 460, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(BtnRetirarSinCuenta1, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addGroup(layout.createSequentialGroup()
@@ -263,11 +366,33 @@ public class frmMenu extends javax.swing.JFrame {
                                     .addComponent(lblAviso, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(comboBoxCuentas, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addComponent(lblTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(33, 33, 33)
-                        .addComponent(lblNombrePar)
+                        .addGap(6, 6, 6)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lblNombrePar)
+                            .addComponent(btnHistorial))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnHistorialSinCuenta)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnHistorialTrans)))
+                        .addGap(0, 159, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(16, 16, 16)
+                                .addComponent(lblSaldo, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lblDinero, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(BtnRetirarSinCuenta, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnTransferencia, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnCancelarCuenta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(22, Short.MAX_VALUE))
+                        .addComponent(jScrollPane2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -284,11 +409,22 @@ public class frmMenu extends javax.swing.JFrame {
                 .addGap(15, 15, 15)
                 .addComponent(lblAviso, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(comboBoxCuentas, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(comboBoxCuentas, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnHistorialSinCuenta)
+                    .addComponent(btnHistorial)
+                    .addComponent(btnHistorialTrans))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(28, 28, 28))
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(19, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(lblSaldo, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -297,14 +433,9 @@ public class frmMenu extends javax.swing.JFrame {
                                 .addComponent(btnTransferencia)
                                 .addGap(18, 18, 18)
                                 .addComponent(BtnRetirarSinCuenta)
-                                .addGap(77, 77, 77)
-                                .addComponent(btnCancelarCuenta))
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(BtnRetirarSinCuenta1, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(64, 64, 64))))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnCancelarCuenta)
+                                .addGap(42, 42, 42))))))
         );
 
         pack();
@@ -318,30 +449,38 @@ public class frmMenu extends javax.swing.JFrame {
     private void btnCrearCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearCuentaActionPerformed
 
             
-            frmCuenta registro = new frmCuenta(cuentasDAO,accion.NUEVO,clienteInicio);
-            registro.setVisible(true);
-        
+            frmCuenta cuentaNueva = new frmCuenta(cuentasDAO,accion.NUEVO,clienteInicio);
+            cuentaNueva.setVisible(true);
+            this.dispose();
         
     }//GEN-LAST:event_btnCrearCuentaActionPerformed
 
     private void comboBoxCuentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBoxCuentasActionPerformed
-    Cuenta cuentaSeleccionada = (Cuenta) comboBoxCuentas.getSelectedItem();
-        if (cuentasDAO.buscarPorNumeroCuenta(cuentaSeleccionada.getNumeroCuenta())==null) {
+
+        if (cuentaCombo()==null) {
             
         }else{
-            lblDinero.setText(String.valueOf(cuentaSeleccionada.getSaldo()));
+            lblDinero.setText(String.valueOf(cuentaCombo().getSaldo()));
+             modeloHistorialTodo(Integer.parseInt(cuentaCombo().getNumeroCuenta()));
         }
     }//GEN-LAST:event_comboBoxCuentasActionPerformed
 
     private void btnActualizarDatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarDatosActionPerformed
 
-            frmCliente registro = new frmCliente(clienteInicio,accion.EDITAR,this.clienteDAO);
-            registro.setVisible(true);
-        
+            frmCliente clienteDatosNuevos = new frmCliente(clienteInicio,accion.EDITAR,this.clienteDAO);
+            clienteDatosNuevos.setVisible(true);
+            this.dispose();
     }//GEN-LAST:event_btnActualizarDatosActionPerformed
 
     private void btnCancelarCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarCuentaActionPerformed
-        // TODO add your handling code here:
+       int opcion = JOptionPane.showConfirmDialog(this, "¿Quieres Eliminar La Cuenta "+cuentaCombo().getNumeroCuenta(), "Confirmacion", JOptionPane.OK_CANCEL_OPTION,JOptionPane.WARNING_MESSAGE);
+        if (opcion!=0) {
+            
+        }else{
+                this.cancelarCuenta();
+        }
+        
+        
     }//GEN-LAST:event_btnCancelarCuentaActionPerformed
 
     private void BtnRetirarSinCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnRetirarSinCuentaActionPerformed
@@ -353,7 +492,7 @@ public class frmMenu extends javax.swing.JFrame {
     
     }//GEN-LAST:event_BtnRetirarSinCuentaActionPerformed
 
-    private void BtnRetirarSinCuenta1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnRetirarSinCuenta1ActionPerformed
+    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
    
     int opcion = JOptionPane.showConfirmDialog(this, "¿Quieres Volver Al Menu?", "Confirmacion", JOptionPane.OK_CANCEL_OPTION,JOptionPane.WARNING_MESSAGE);
         if (opcion!=0) {
@@ -367,7 +506,26 @@ public class frmMenu extends javax.swing.JFrame {
         
         
         
-    }//GEN-LAST:event_BtnRetirarSinCuenta1ActionPerformed
+    }//GEN-LAST:event_btnSalirActionPerformed
+
+    private void btnHistorialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHistorialActionPerformed
+        if (cuentaCombo()!=null) {
+            this.modeloHistorialTodo(Integer.parseInt(cuentaCombo().getNumeroCuenta()));
+        }
+        
+    }//GEN-LAST:event_btnHistorialActionPerformed
+
+    private void btnHistorialSinCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHistorialSinCuentaActionPerformed
+    if (cuentaCombo()!=null) {
+            this.modeloHistorialRetiro(Integer.parseInt(cuentaCombo().getNumeroCuenta()));
+        }
+    }//GEN-LAST:event_btnHistorialSinCuentaActionPerformed
+
+    private void btnHistorialTransActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHistorialTransActionPerformed
+    if (cuentaCombo()!=null) {
+            this.modeloHistorialTransaccion(Integer.parseInt(cuentaCombo().getNumeroCuenta()));
+        }
+    }//GEN-LAST:event_btnHistorialTransActionPerformed
 
     /**
      * @param args the command line arguments
@@ -407,10 +565,13 @@ public class frmMenu extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BtnRetirarSinCuenta;
-    private javax.swing.JButton BtnRetirarSinCuenta1;
     private javax.swing.JButton btnActualizarDatos;
     private javax.swing.JButton btnCancelarCuenta;
     private javax.swing.JButton btnCrearCuenta;
+    private javax.swing.JButton btnHistorial;
+    private javax.swing.JButton btnHistorialSinCuenta;
+    private javax.swing.JButton btnHistorialTrans;
+    private javax.swing.JButton btnSalir;
     private javax.swing.JButton btnTransferencia;
     private javax.swing.JComboBox<Cuenta> comboBoxCuentas;
     private javax.swing.JProgressBar jProgressBar1;

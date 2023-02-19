@@ -39,8 +39,11 @@ public class RetiroSinCuentaDAO implements IRetiroSinCuentaDAO{
             System.out.println(codigo);
             
             comando.executeUpdate(codigo);
-            retiroSinCuenta.setFolio(buscarid(conex));        
+            retiroSinCuenta.setFolio(buscarid(conex)); 
+            
             conex.close();
+            
+            
         } catch (SQLException ex) {
             Logger.getLogger(ClientesDAO.class.getName()).log(Level.SEVERE, null, ex);
             return null;

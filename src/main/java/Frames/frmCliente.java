@@ -20,7 +20,9 @@ import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import persistencia.CuentasDAO;
 import persistencia.IClientesDAO;
+import persistencia.ICuentasDAO;
 
 /**
  *
@@ -114,7 +116,8 @@ public class frmCliente extends javax.swing.JFrame {
 
     private void guardar() {
 
-        Cliente clienteGuardar = this.iClienteDAO.guardar(getClienteControles());      
+        Cliente clienteGuardar = this.iClienteDAO.guardar(getClienteControles());  
+        
         if (clienteGuardar != null) {         
            JOptionPane.showMessageDialog(this, "Se ha Registrado Correctamente, tu id es: "+clienteGuardar.getIdCliente(),
                     "Información", JOptionPane.INFORMATION_MESSAGE);
@@ -384,6 +387,9 @@ public class frmCliente extends javax.swing.JFrame {
         }else{
         if (accion==accion.EDITAR) {
             editar();
+            ICuentasDAO clienteDAO = new CuentasDAO();
+            frmMenu menu = new frmMenu(clienteDAO,iClienteDAO,cliente);
+            menu.setVisible(true);
         }
         if (accion==accion.ELIMINAR) { 
            eliminar();

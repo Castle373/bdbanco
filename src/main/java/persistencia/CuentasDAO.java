@@ -184,10 +184,10 @@ public class CuentasDAO implements ICuentasDAO{
         try {
             Connection conex = this.conexion.crearConexion();
             Statement comando = conex.createStatement();
-            String codigo= String.format("UPDATE Cliente "
+            String codigo= String.format("UPDATE Cuenta "
                     + "SET estado='CANCELADO'"
-                    + " WHERE idCliente =%s",
-                    Cuenta.getIdCliente()
+                    + " WHERE NumeroCuenta =%s",
+                    Cuenta.getNumeroCuenta()
                     );
             comando.executeUpdate(codigo);
             conex.close();

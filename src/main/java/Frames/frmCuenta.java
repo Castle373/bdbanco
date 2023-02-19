@@ -19,6 +19,7 @@ import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import persistencia.ClientesDAO;
 import persistencia.IClientesDAO;
 import persistencia.ICuentasDAO;
 
@@ -201,6 +202,9 @@ public class frmCuenta extends javax.swing.JFrame {
         if (txtSaldo.getText().equals("")){         
         }else{
             this.guardar();
+            IClientesDAO clienteDAO = new ClientesDAO();
+            frmMenu menu = new frmMenu(ICuentasDAO,clienteDAO,cliente);
+            menu.setVisible(true);
             this.dispose();
         }
     

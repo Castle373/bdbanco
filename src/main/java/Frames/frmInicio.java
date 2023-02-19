@@ -62,6 +62,7 @@ public class frmInicio extends javax.swing.JFrame {
         
         clienteInicio = new Cliente(id);
         clienteInicio.setContra(contra);
+        
         clienteInicio.setIdCliente(id);
         Cliente cli = clienteDAO.InicioSesionCliente(clienteInicio);
         if (cli!=null) {
@@ -238,6 +239,7 @@ public class frmInicio extends javax.swing.JFrame {
 
     private void btnIniciarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarSesionActionPerformed
         if (ValidarCuenta()) { 
+            
             Cliente cli = this.clienteDAO.buscarPorIdCliente(txtId.getText());
             ICuentasDAO CuentasDAO = new CuentasDAO();
             frmMenu registro = new frmMenu(CuentasDAO,this.clienteDAO,cli);

@@ -194,8 +194,7 @@ public class ClientesDAO implements IClientesDAO{
     }
 
     @Override
-    public Cliente InicioSesionCliente(Cliente cliente) {
-        
+    public Cliente InicioSesionCliente(Cliente cliente) {  
         Cliente clienteEncontrado=null;
         try {
             Connection conex = this.conexion.crearConexion();
