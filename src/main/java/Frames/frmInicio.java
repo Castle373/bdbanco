@@ -224,10 +224,7 @@ public class frmInicio extends javax.swing.JFrame {
 
         }
 
-        if (txtId.getText().trim().length() == 10) {
-            evt.consume();
-            JOptionPane.showMessageDialog(this, "", "", JOptionPane.WARNING_MESSAGE);
-        }
+
     }//GEN-LAST:event_txtIdKeyTyped
 
     private void btnRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistroActionPerformed

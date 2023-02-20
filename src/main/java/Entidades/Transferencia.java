@@ -8,6 +8,7 @@ package Entidades;
  *
  * @author Gabriel
  */
+
 public class Transferencia {
         private String fechaHora;
     private String cantidad;
@@ -20,6 +21,9 @@ public class Transferencia {
         this.numeroCuenta = numeroCuenta;
         this.numeroCuentaEnvio = numeroCuentaEnvio;
     }
+        public  Transferencia (){
+    
+}
 
     public Transferencia(String cantidad, String numeroCuenta, String numeroCuentaEnvio) {
         this.cantidad = cantidad;

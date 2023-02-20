@@ -12,5 +12,5 @@ import Entidades.Transferencia;
  */
 public interface ITransferenciaDAO {
       public Transferencia guardar(Transferencia Transferencia);
-public Transferencia Operacion(float a, float b,Transferencia Transferencia,String Cuentaenviar);
+ public Transferencia Operacion(float a, float b,Transferencia Transferencia,String Cuentaenviar,String cuenta);
 }

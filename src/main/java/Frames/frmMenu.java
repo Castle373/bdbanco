@@ -22,6 +22,7 @@ import persistencia.ICuentasDAO;
 import persistencia.IRetiroSinCuentaDAO;
 import persistencia.ITransferenciaDAO;
 import persistencia.RetiroSinCuentaDAO;
+import persistencia.TransferenciaDAO;
 
 /**
  *
@@ -317,7 +318,11 @@ public class frmMenu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnTransferenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTransferenciaActionPerformed
-
+ITransferenciaDAO Transferencia = new TransferenciaDAO();
+        Cuenta cuentaSeleccionada = (Cuenta) comboBoxCuentas.getSelectedItem();
+        frmTranferir f=new frmTranferir(Transferencia,cuentaSeleccionada,clienteInicio,cuentasDAO);
+f.setVisible(true);
+this.dispose();
     }//GEN-LAST:event_btnTransferenciaActionPerformed
 
     private void btnCrearCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearCuentaActionPerformed

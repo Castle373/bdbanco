@@ -28,8 +28,8 @@ public class TransferenciaDAO implements ITransferenciaDAO{
      try {
             Connection conex = this.conexion.crearConexion();
             Statement comando = conex.createStatement();
-            String codigo= String.format("INSERT INTO Transacciones  (numeroCuenta, numeroCuentaEnvio, cantidad)"
-                    + "VALUES ('%s','%s','%d')",
+            String codigo= String.format("INSERT INTO Transacciones  (numeroCuenta,numeroCuentaEnvio,cantidad)"
+                    + "VALUES ('%s','%s','%s')",
                     Transferencia.getNumeroCuenta(),
                     Transferencia.getNumeroCuentaEnvio(),
                     Transferencia.getCantidad()
@@ -46,12 +46,12 @@ public class TransferenciaDAO implements ITransferenciaDAO{
       return Transferencia;
     }    
  @Override
- public Transferencia Operacion(float a, float b,Transferencia Transferencia,String Cuentaenviar){
+ public Transferencia Operacion(float a, float b,Transferencia Transferencia,String Cuentaenviar,String cuenta){
       try {
             Connection conex = this.conexion.crearConexion();
             Statement comando = conex.createStatement();
-            String codigo= String.format("UPDATE Transacciones SET Sueldo="+a+" Where="+Transferencia.getNumeroCuenta());
-             String codigo2= String.format("UPDATE Transacciones SET Sueldo="+b+" Where="+Cuentaenviar);
+            String codigo= String.format("UPDATE Cuenta SET saldo="+a+" Where numeroCuenta="+cuenta);
+             String codigo2= String.format("UPDATE Cuenta SET saldo="+b+" Where numeroCuenta="+Cuentaenviar);
             System.out.println(codigo);
             
             comando.executeUpdate(codigo);
