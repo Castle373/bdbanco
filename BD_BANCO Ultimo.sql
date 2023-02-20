@@ -1,7 +1,9 @@
+
 CREATE DATABASE bdbanco;
 USE bdbanco;
 CREATE TABLE Cliente (
   idCliente int NOT NULL AUTO_INCREMENT,
+  usuario varchar(60) NOT NULL,
   nombres varchar(60) NOT NULL,
   apellidoPaterno varchar(30) NOT NULL,
   apellidoMaterno varchar(30) NOT NULL,
@@ -82,8 +84,13 @@ begin
   SET NEW.edad = TIMESTAMPDIFF(YEAR, new.fechaNacimiento, CURDATE());
 end//
 delimiter ;
-
-
+delimiter //
+create trigger Hora BEFORE insert on Transacciones
+for each row 
+begin
+  SET NEW.fechaHora = current_timestamp();
+end//
+delimiter ;
 delimiter //
 create procedure SaldoCuenta(in numeroCuentaB int,out saldoDinero float)
 begin
