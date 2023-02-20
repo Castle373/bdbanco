@@ -148,6 +148,17 @@ public void crearFont(){
             }
         });
 
+        txtNumeroCuentaEnvio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNumeroCuentaEnvioActionPerformed(evt);
+            }
+        });
+        txtNumeroCuentaEnvio.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNumeroCuentaEnvioKeyTyped(evt);
+            }
+        });
+
         lblNumeroCuentaEnvio.setFont(new java.awt.Font("Century Schoolbook", 1, 18)); // NOI18N
         lblNumeroCuentaEnvio.setText("Numero De Cuenta A Enviar");
 
@@ -253,6 +264,22 @@ public void crearFont(){
 
       // TODO add your handling code here:
     }//GEN-LAST:event_txtCantidadKeyTyped
+
+    private void txtNumeroCuentaEnvioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNumeroCuentaEnvioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNumeroCuentaEnvioActionPerformed
+
+    private void txtNumeroCuentaEnvioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNumeroCuentaEnvioKeyTyped
+ int key = evt.getKeyChar();
+
+        boolean numeros = key >= 48 && key <= 57;
+
+        if (!numeros)
+        {
+            evt.consume();
+
+        }        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNumeroCuentaEnvioKeyTyped
 
     /**
      * @param args the command line arguments

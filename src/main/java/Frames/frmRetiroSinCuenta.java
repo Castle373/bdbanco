@@ -99,6 +99,11 @@ public class frmRetiroSinCuenta extends javax.swing.JFrame {
                 txtFolioActionPerformed(evt);
             }
         });
+        txtFolio.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtFolioKeyTyped(evt);
+            }
+        });
 
         lblContraseña.setFont(new java.awt.Font("Century Schoolbook", 1, 18)); // NOI18N
         lblContraseña.setText("Contraseña:");
@@ -206,6 +211,18 @@ public class frmRetiroSinCuenta extends javax.swing.JFrame {
     private void txtFolioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFolioActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtFolioActionPerformed
+
+    private void txtFolioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFolioKeyTyped
+    int key = evt.getKeyChar();
+
+        boolean numeros = key >= 48 && key <= 57;
+
+        if (!numeros)
+        {
+            evt.consume();
+
+        } 
+    }//GEN-LAST:event_txtFolioKeyTyped
 
     /**
      * @param args the command line arguments
