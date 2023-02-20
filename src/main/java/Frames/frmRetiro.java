@@ -7,6 +7,7 @@ package Frames;
 import Entidades.Cliente;
 import Entidades.Cuenta;
 import Entidades.RetiroSinCuenta;
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.util.Random;
@@ -38,6 +39,7 @@ public class frmRetiro extends javax.swing.JFrame {
         this.setContentPane(fondo);
         initComponents();        
         lblNumeroCuenta.setText("Numero de Cuenta: "+cuenta.getNumeroCuenta());
+        crearFont();
     }
     public boolean crearRetiro(){
         if (txtCantidad.getText().equals("")) {
@@ -65,6 +67,14 @@ public class frmRetiro extends javax.swing.JFrame {
         }
        
     }
+    public void crearFont(){
+        //Colocar Colores A Label
+        lblCantidad.setForeground(Color.black);
+        lblNumeroCuenta.setForeground(Color.black);
+        lblRetiro.setForeground(Color.black);
+
+        
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -76,8 +86,8 @@ public class frmRetiro extends javax.swing.JFrame {
 
         jDayChooser2 = new com.toedter.calendar.JDayChooser();
         txtCantidad = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
-        Retiro = new javax.swing.JLabel();
+        lblCantidad = new javax.swing.JLabel();
+        lblRetiro = new javax.swing.JLabel();
         btnAceptar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
         lblNumeroCuenta = new javax.swing.JLabel();
@@ -90,12 +100,14 @@ public class frmRetiro extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setFont(new java.awt.Font("Century Schoolbook", 1, 14)); // NOI18N
-        jLabel1.setText("Cantidad");
+        lblCantidad.setFont(new java.awt.Font("Century Schoolbook", 1, 18)); // NOI18N
+        lblCantidad.setText("Cantidad:");
 
-        Retiro.setFont(new java.awt.Font("Century Schoolbook", 1, 36)); // NOI18N
-        Retiro.setText("Crear Retiro");
+        lblRetiro.setFont(new java.awt.Font("Century Schoolbook", 1, 36)); // NOI18N
+        lblRetiro.setText("Crear Retiro");
 
+        btnAceptar.setBackground(new java.awt.Color(149, 175, 255));
+        btnAceptar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnAceptar.setText("Aceptar");
         btnAceptar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -103,6 +115,8 @@ public class frmRetiro extends javax.swing.JFrame {
             }
         });
 
+        btnCancelar.setBackground(new java.awt.Color(149, 175, 255));
+        btnCancelar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnCancelar.setText("Cancelar");
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -110,7 +124,7 @@ public class frmRetiro extends javax.swing.JFrame {
             }
         });
 
-        lblNumeroCuenta.setFont(new java.awt.Font("Century Schoolbook", 1, 14)); // NOI18N
+        lblNumeroCuenta.setFont(new java.awt.Font("Century Schoolbook", 1, 18)); // NOI18N
         lblNumeroCuenta.setText("Numero de Cuenta");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -120,41 +134,42 @@ public class frmRetiro extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(110, 110, 110)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(btnCancelar)
-                                .addGap(167, 167, 167)
-                                .addComponent(btnAceptar))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(9, 9, 9)
-                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(61, 61, 61)
-                                .addComponent(txtCantidad))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(139, 139, 139)
-                        .addComponent(Retiro, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(54, 54, 54)
-                        .addComponent(lblNumeroCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, 473, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtCantidad))
+                            .addComponent(lblNumeroCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, 473, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(139, 139, 139)
+                                .addComponent(lblRetiro, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(110, 110, 110)
+                                .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(149, 149, 149)
+                                .addComponent(btnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap(27, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(61, 61, 61)
-                .addComponent(Retiro, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lblRetiro, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblNumeroCuenta, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE))
+                    .addComponent(lblCantidad, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE))
                 .addGap(41, 41, 41)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnCancelar)
-                    .addComponent(btnAceptar))
-                .addContainerGap(94, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnAceptar, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE)
+                    .addComponent(btnCancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(83, Short.MAX_VALUE))
         );
 
         pack();
@@ -222,12 +237,12 @@ public class frmRetiro extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel Retiro;
     private javax.swing.JButton btnAceptar;
     private javax.swing.JButton btnCancelar;
     private com.toedter.calendar.JDayChooser jDayChooser2;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel lblCantidad;
     private javax.swing.JLabel lblNumeroCuenta;
+    private javax.swing.JLabel lblRetiro;
     private javax.swing.JTextField txtCantidad;
     // End of variables declaration//GEN-END:variables
 class FondoPanel extends JPanel {

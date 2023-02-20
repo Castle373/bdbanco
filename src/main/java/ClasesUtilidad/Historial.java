@@ -9,12 +9,21 @@ package ClasesUtilidad;
  * @author diego
  */
 public class Historial {
+    private String numeroCuentaOrigen;
     private String numeroCuentaEnvio;
     private String folio;
     private String cantidad;
     private String estado;
     private String fechaHora;
     private String fechaHoraRetirado;
+
+    public String getNumeroCuentaOrigen() {
+        return numeroCuentaOrigen;
+    }
+
+    public void setNumeroCuentaOrigen(String numeroCuentaOrigen) {
+        this.numeroCuentaOrigen = numeroCuentaOrigen;
+    }
 
     public Historial(){
         

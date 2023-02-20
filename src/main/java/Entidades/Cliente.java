@@ -19,22 +19,33 @@ public class Cliente {
     private String calleNumero;
     private String edad;
     private String contra;
+    private String usuario;
     public Cliente(){
         
     }
-    public Cliente(String idCliente, String nombres, String apellidoPaterno, String apellidoMaterno, String fechaNacimiento,String ciudad ,String colinia, String calleNumero,String edad,String contra) {
+
+    public Cliente(String idCliente, String nombres, String apellidoPaterno, String apellidoMaterno, String fechaNacimiento, String ciudad, String colinia, String calleNumero, String edad, String contra, String usuario) {
         this.idCliente = idCliente;
         this.nombres = nombres;
         this.apellidoPaterno = apellidoPaterno;
         this.apellidoMaterno = apellidoMaterno;
         this.fechaNacimiento = fechaNacimiento;
-        this.colinia = colinia;
         this.ciudad = ciudad;
+        this.colinia = colinia;
         this.calleNumero = calleNumero;
-        this.edad=edad;
-        this.contra=contra;
-        
+        this.edad = edad;
+        this.contra = contra;
+        this.usuario = usuario;
     }
+
+    public String getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+    }
+    
 
     public Cliente(String idCliente,String contra) {
         this.idCliente = idCliente;

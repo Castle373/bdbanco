@@ -5,7 +5,7 @@
 package Frames;
 
 import Entidades.Cliente;
-import com.mycompany.bdbanco.Encriptacion;
+import com.mycompany.bdbanco.Encripta;
 import enumeradores.AccionCatalogoEnum;
 import java.awt.Color;
 import java.awt.Font;
@@ -55,24 +55,25 @@ public class frmInicio extends javax.swing.JFrame {
         
       
     }
-    public boolean ValidarCuenta(){
-        String id = txtId.getText();
-        Encriptacion a=new Encriptacion();
+    public Cliente ValidarCuenta(){
+        String usuario = txtUsuario.getText();
         String contra = txtContraseña.getText();
+        Encripta encripta = new Encripta();
         
-        clienteInicio = new Cliente(id);
-        clienteInicio.setContra(contra);
+        clienteInicio = new Cliente();
+        clienteInicio.setContra(encripta.encriptar(contra));
         
-        clienteInicio.setIdCliente(id);
+        
+        clienteInicio.setUsuario(usuario);
         Cliente cli = clienteDAO.InicioSesionCliente(clienteInicio);
         if (cli!=null) {
-            return true; 
+            return cli; 
             
         }
         
             JOptionPane.showMessageDialog(this, "El id o la Contraseña son incorrectas",
                     "Información", JOptionPane.INFORMATION_MESSAGE);          
-            return false;  
+            return null;  
         
     }
     public void crearFont() throws FontFormatException, IOException{
@@ -89,13 +90,16 @@ public class frmInicio extends javax.swing.JFrame {
         lblNombre.setFont(font);
         lblId.setFont(font1);
         lblContraseña.setFont(font1);
-        txtId.setFont(font);
+        txtUsuario.setFont(font);
         txtContraseña.setFont(font);
         
         //Colocar Colores A Label
         lblNombre.setForeground(Color.black);
         lblId.setForeground(Color.black);
         lblContraseña.setForeground(Color.black);
+        btnRegistro.setForeground(Color.black);
+        btnIniciarSesion.setForeground(Color.black);
+        btnRetirarSinCuenta.setForeground(Color.black);
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -109,7 +113,7 @@ public class frmInicio extends javax.swing.JFrame {
         lblNombre = new javax.swing.JLabel();
         lblId = new javax.swing.JLabel();
         lblContraseña = new javax.swing.JLabel();
-        txtId = new javax.swing.JTextField();
+        txtUsuario = new javax.swing.JTextField();
         txtContraseña = new javax.swing.JPasswordField();
         btnRegistro = new javax.swing.JButton();
         btnIniciarSesion = new javax.swing.JButton();
@@ -120,21 +124,23 @@ public class frmInicio extends javax.swing.JFrame {
 
         lblNombre.setText("INICIO DE SESION");
 
-        lblId.setText("ID:");
+        lblId.setText("Usuario:");
 
         lblContraseña.setText("Contraseña:");
 
-        txtId.addActionListener(new java.awt.event.ActionListener() {
+        txtUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtIdActionPerformed(evt);
+                txtUsuarioActionPerformed(evt);
             }
         });
-        txtId.addKeyListener(new java.awt.event.KeyAdapter() {
+        txtUsuario.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtIdKeyTyped(evt);
+                txtUsuarioKeyTyped(evt);
             }
         });
 
+        btnRegistro.setBackground(new java.awt.Color(255, 204, 51));
+        btnRegistro.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnRegistro.setText("Registrar");
         btnRegistro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -142,6 +148,8 @@ public class frmInicio extends javax.swing.JFrame {
             }
         });
 
+        btnIniciarSesion.setBackground(new java.awt.Color(149, 175, 255));
+        btnIniciarSesion.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnIniciarSesion.setText("Iniciar");
         btnIniciarSesion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -149,6 +157,8 @@ public class frmInicio extends javax.swing.JFrame {
             }
         });
 
+        btnRetirarSinCuenta.setBackground(new java.awt.Color(255, 204, 0));
+        btnRetirarSinCuenta.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnRetirarSinCuenta.setText("Retirar Sin Cuenta");
         btnRetirarSinCuenta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -161,28 +171,28 @@ public class frmInicio extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnIniciarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(45, 45, 45)
-                .addComponent(btnRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(57, 57, 57)
+                .addContainerGap(173, Short.MAX_VALUE)
+                .addComponent(btnRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(29, 29, 29)
                 .addComponent(btnRetirarSinCuenta)
-                .addGap(73, 73, 73))
+                .addGap(27, 27, 27))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(lblId, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(150, 150, 150)
+                        .addComponent(lblNombre))
+                    .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(lblContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btnIniciarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtId, javax.swing.GroupLayout.DEFAULT_SIZE, 231, Short.MAX_VALUE)
-                            .addComponent(txtContraseña)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(150, 150, 150)
-                        .addComponent(lblNombre)))
+                            .addComponent(txtUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, 231, Short.MAX_VALUE)
+                            .addComponent(txtContraseña))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -193,77 +203,48 @@ public class frmInicio extends javax.swing.JFrame {
                 .addGap(41, 41, 41)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblId, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(40, 40, 40)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnIniciarSesion)
                     .addComponent(btnRegistro)
-                    .addComponent(btnRetirarSinCuenta))
-                .addContainerGap(87, Short.MAX_VALUE))
+                    .addComponent(btnRetirarSinCuenta)
+                    .addComponent(btnIniciarSesion))
+                .addContainerGap(109, Short.MAX_VALUE))
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdActionPerformed
+    private void txtUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUsuarioActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtIdActionPerformed
+    }//GEN-LAST:event_txtUsuarioActionPerformed
 
-    private void txtIdKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIdKeyTyped
-        int key = evt.getKeyChar();
+    private void txtUsuarioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUsuarioKeyTyped
 
-        boolean numeros = key >= 48 && key <= 57;
-
-        if (!numeros)
-        {
-            evt.consume();
-
-        }
-
-
-    }//GEN-LAST:event_txtIdKeyTyped
+    }//GEN-LAST:event_txtUsuarioKeyTyped
 
     private void btnRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistroActionPerformed
         Cliente cli = new Cliente();
         frmCliente registro = new frmCliente(cli,accion.NUEVO,this.clienteDAO);
         registro.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnRegistroActionPerformed
 
     private void btnIniciarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarSesionActionPerformed
-<<<<<<< HEAD
-        if (ValidarCuenta()) { 
+
+        if (ValidarCuenta()!=null) { 
             
-            Cliente cli = this.clienteDAO.buscarPorIdCliente(txtId.getText());
+            Cliente cli = this.clienteDAO.buscarPorIdCliente(ValidarCuenta().getIdCliente());
             ICuentasDAO CuentasDAO = new CuentasDAO();
             frmMenu registro = new frmMenu(CuentasDAO,this.clienteDAO,cli);
             registro.setVisible(true);
             this.dispose();
         }
-=======
-          Encriptacion a=new Encriptacion();
-        cliente2=clienteDAO.buscarPorIdCliente(txtId.getText());
-        
-        byte[] hola = cliente2.getContra().getBytes();
-          try {
-              if(a.descifra(hola)==txtContraseña.getText()) {
-                  
-                  if (ValidarCuenta()) {
-                      Cliente cli = this.clienteDAO.buscarPorIdCliente(txtId.getText());
-                      ICuentasDAO CuentasDAO = new CuentasDAO();
-                      frmMenu registro = new frmMenu(CuentasDAO,this.clienteDAO,cli);
-                      registro.setVisible(true);
-                      this.dispose();
-                  }
-              }      } catch (Exception ex) {
-              Logger.getLogger(frmInicio.class.getName()).log(Level.SEVERE, null, ex);
-          }
-          
->>>>>>> a3bc7c1f5314d950810c2ebafebc141538e3fac5
 
     }//GEN-LAST:event_btnIniciarSesionActionPerformed
 
@@ -319,7 +300,7 @@ public class frmInicio extends javax.swing.JFrame {
     private javax.swing.JLabel lblId;
     private javax.swing.JLabel lblNombre;
     private javax.swing.JPasswordField txtContraseña;
-    private javax.swing.JTextField txtId;
+    private javax.swing.JTextField txtUsuario;
     // End of variables declaration//GEN-END:variables
 class FondoPanel extends JPanel {
 

@@ -5,7 +5,7 @@
 package persistencia;
 
 import Entidades.Cliente;
-import com.mycompany.bdbanco.Encriptacion;
+import com.mycompany.bdbanco.Encripta;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -47,9 +47,10 @@ public class ClientesDAO implements IClientesDAO{
                  String ciudad = resultado.getString("ciudad");
                  String colinia = resultado.getString("colinia");
                  String calleNumero = resultado.getString("calleNumero");   
-                 String contra = resultado.getString("contrasena");   
+                 String contra = resultado.getString("contrasena");
+                 String usuario = resultado.getString("usuario");
                  Cliente nuevoCliente = new Cliente(idCliente,nombres,apellidoPaterno,apellidoMaterno,
-                                                 fechaNacimiento,ciudad,colinia,calleNumero,edad,contra); 
+                                                 fechaNacimiento,ciudad,colinia,calleNumero,edad,contra,usuario); 
              listCliente.add(nuevoCliente);
 
          }
@@ -85,8 +86,9 @@ public class ClientesDAO implements IClientesDAO{
                  String colinia = resultado.getString("colinia");
                  String calleNumero = resultado.getString("calleNumero");       
                  String contra = resultado.getString("contrasena");   
+                 String usuario = resultado.getString("usuario");
                  clienteEncontrado = new Cliente(idCliente,nombres,apellidoPaterno,apellidoMaterno,
-                                                 fechaNacimiento,ciudad,colinia,calleNumero,edad,contra);        
+                                                 fechaNacimiento,ciudad,colinia,calleNumero,edad,contra,usuario);        
 
          }
         conex.close();
@@ -100,14 +102,15 @@ public class ClientesDAO implements IClientesDAO{
     public Cliente guardar(Cliente cliente) { 
     String contra;
     contra=cliente.getContra();
-        Encriptacion a=new Encriptacion();
+        Encripta encripta=new Encripta();
         
      
         try {
             Connection conex = this.conexion.crearConexion();
             Statement comando = conex.createStatement();
-            String codigo= String.format("INSERT INTO Cliente (nombres,apellidoPaterno,apellidoMaterno,fechaNacimiento,ciudad,colinia,calleNumero,contrasena)"
-                    + "VALUES ('%s','%s','%s','%s','%s','%s','%s','%s')",
+            String codigo= String.format("INSERT INTO Cliente (usuario,nombres,apellidoPaterno,apellidoMaterno,fechaNacimiento,ciudad,colinia,calleNumero,contrasena)"
+                    + "VALUES ('%s','%s','%s','%s','%s','%s','%s','%s','%s')",
+                    cliente.getUsuario(),
                     cliente.getNombres(),
                     cliente.getApellidoPaterno(),
                     cliente.getApellidoMaterno(),
@@ -115,7 +118,7 @@ public class ClientesDAO implements IClientesDAO{
                     cliente.getCiudad(),
                     cliente.getColinia(),
                     cliente.getCalleNumero(),
-                     a.cifra(contra)
+                    encripta.encriptar(contra)
                     );
             
             comando.executeUpdate(codigo);
@@ -152,6 +155,9 @@ public class ClientesDAO implements IClientesDAO{
     }
     @Override
     public Cliente editar(Cliente cliente) {
+        String contra;
+         contra=cliente.getContra();
+        Encripta encripta=new Encripta();
          try {
             Connection conex = this.conexion.crearConexion();
             Statement comando = conex.createStatement();
@@ -166,7 +172,7 @@ public class ClientesDAO implements IClientesDAO{
                     cliente.getCiudad(),
                     cliente.getColinia(),
                     cliente.getCalleNumero(),
-                    cliente.getContra(),
+                    encripta.encriptar(contra),
                     cliente.getIdCliente()
                     );
             comando.executeUpdate(codigo);
@@ -194,18 +200,14 @@ public class ClientesDAO implements IClientesDAO{
     }
 
     @Override
-<<<<<<< HEAD
-    public Cliente InicioSesionCliente(Cliente cliente) {  
-=======
-    public Cliente InicioSesionCliente(Cliente cliente) {
-         Encriptacion a=new Encriptacion();
->>>>>>> a3bc7c1f5314d950810c2ebafebc141538e3fac5
+    public Cliente InicioSesionCliente(Cliente cliente) {         
         Cliente clienteEncontrado=null;
+        
         try {
             Connection conex = this.conexion.crearConexion();
             Statement comandoSQL = conex.createStatement();
-  
-            String querySql= "Select * From Cliente WHERE idCliente ='"+cliente.getIdCliente()+"'";
+            String querySql= "Select * From Cliente WHERE usuario ='"+cliente.getUsuario()+"' and contrasena='"+cliente.getContra()+"'";
+    
              ResultSet resultado = comandoSQL.executeQuery(querySql);
              
              if(resultado.next()){
@@ -218,9 +220,10 @@ public class ClientesDAO implements IClientesDAO{
                  String ciudad = resultado.getString("ciudad");
                  String colinia = resultado.getString("colinia");
                  String calleNumero = resultado.getString("calleNumero");       
-                 String contra = resultado.getString("contrasena");   
+                 String contra = resultado.getString("contrasena"); 
+                 String usuario = resultado.getString("usuario");
                  clienteEncontrado = new Cliente(idCliente,nombres,apellidoPaterno,apellidoMaterno,
-                                                 fechaNacimiento,ciudad,colinia,calleNumero,edad,contra);        
+                                                 fechaNacimiento,ciudad,colinia,calleNumero,edad,contra,usuario);        
 
          }
         conex.close();

@@ -130,8 +130,17 @@ public class frmCuenta extends javax.swing.JFrame {
 
         lblTitulo.setText("Crear Cuenta");
 
+        btnCancelar.setBackground(new java.awt.Color(149, 175, 255));
+        btnCancelar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
 
+        btnAceptar.setBackground(new java.awt.Color(149, 175, 255));
+        btnAceptar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnAceptar.setText("Crear");
         btnAceptar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -195,7 +204,7 @@ public class frmCuenta extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtSaldoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSaldoActionPerformed
-     this.dispose();
+     
     }//GEN-LAST:event_txtSaldoActionPerformed
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
@@ -224,6 +233,13 @@ public class frmCuenta extends javax.swing.JFrame {
         evt.consume();
     }
     }//GEN-LAST:event_txtSaldoKeyTyped
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+    IClientesDAO clienteDAO = new ClientesDAO();
+        frmMenu menu = new frmMenu(ICuentasDAO,clienteDAO,cliente);
+            menu.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnCancelarActionPerformed
 
     /**
      * @param args the command line arguments

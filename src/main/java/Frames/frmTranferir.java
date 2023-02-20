@@ -7,6 +7,9 @@ package Frames;
 import Entidades.Cliente;
 import Entidades.Cuenta;
 import Entidades.Transferencia;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Image;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,7 +17,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import persistencia.ClientesDAO;
 import persistencia.ConexionBD;
 import persistencia.CuentasDAO;
@@ -27,25 +32,28 @@ import persistencia.ITransferenciaDAO;
  * @author diego
  */
 public class frmTranferir extends javax.swing.JFrame {
-    IClientesDAO clienteDAO;
-  Cliente cliente;
-    ICuentasDAO CuentasDAO;
-    ITransferenciaDAO Transferencia;
-    private float sueldoresta,sueldosuma;
+      private IClientesDAO clienteDAO;
+      private Cliente cliente;
+      private  ICuentasDAO CuentasDAO;
+      private ITransferenciaDAO Transferencia;
+      private float sueldoresta,sueldosuma;
       private Cuenta cuenta,cuentaenvio;
+      FondoPanel fondo = new FondoPanel();
     /**
      * Creates new form frmTranferir
      */
     public frmTranferir(ITransferenciaDAO TransferenciaDAO,Cuenta cuenta,Cliente cliente,ICuentasDAO cuentasDAO) {
      this.CuentasDAO=cuentasDAO;
      this.cliente=cliente;
-        this.clienteDAO=clienteDAO;
+        clienteDAO = new ClientesDAO();
         this.Transferencia=TransferenciaDAO;
         this.cuenta=cuenta;
+        this.setContentPane(fondo);
         initComponents();
    
-       lblNumeroCliente.setText("Numero de Cliente: "+cliente.getIdCliente());
-         lblNumeroCuenta2.setText("Numero de Cuenta: "+cuenta.getNumeroCuenta());
+         lblNumeroCliente.setText("Nombre del Cliente: "+cliente.getNombres()+" "+cliente.getApellidoPaterno()+" "+cliente.getApellidoMaterno());
+         lblNumeroCuenta.setText("Numero de Cuenta: "+cuenta.getNumeroCuenta());
+         crearFont();
     }
     
    public boolean operacion(){
@@ -63,19 +71,31 @@ public class frmTranferir extends javax.swing.JFrame {
            trans.setNumeroCuentaEnvio(txtNumeroCuentaEnvio.getText());
           Transferencia.Operacion(sueldoresta, sueldosuma, trans, txtNumeroCuentaEnvio.getText(),cuenta.getNumeroCuenta());
             Transferencia transGuardar = Transferencia.guardar(trans);
-                JOptionPane.showMessageDialog(this, "La operación se realizo con exito",
-                    "Información", JOptionPane.INFORMATION_MESSAGE);  
+                JOptionPane.showMessageDialog(this, "La Operación se realizo con exito",
+                    "Información", JOptionPane.INFORMATION_MESSAGE); 
+                frmMenu menu = new frmMenu(CuentasDAO,clienteDAO,cliente);
+               menu.setVisible(true);
+               this.dispose();
+                
         }else{
                JOptionPane.showMessageDialog(this, "No se encontro la cuenta a enviar",
                     "Información", JOptionPane.ERROR_MESSAGE);  
         }
        }else{
-              JOptionPane.showMessageDialog(this, "No cuenta con el Saldo suficiente para completar esta operación",
+              JOptionPane.showMessageDialog(this, "No Cuenta con el Saldo suficiente para completar esta operación",
                     "Información", JOptionPane.ERROR_MESSAGE); 
        }
         return false;
    }
-
+public void crearFont(){
+        //Colocar Colores A Label
+        lblTitulo.setForeground(Color.black);
+        lblNumeroCuenta.setForeground(Color.black);
+        lblNumeroCuentaEnvio.setForeground(Color.black);
+        lblNumeroCliente.setForeground(Color.black);
+        lblCantidad.setForeground(Color.black);
+        
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -86,70 +106,126 @@ public class frmTranferir extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        lblNumeroCuenta = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
+        lblTitulo = new javax.swing.JLabel();
         txtCantidad = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
+        lblCantidad = new javax.swing.JLabel();
         btnAceptar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
         txtNumeroCuentaEnvio = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
+        lblNumeroCuentaEnvio = new javax.swing.JLabel();
         lblNumeroCliente = new javax.swing.JLabel();
-        lblNumeroCuenta2 = new javax.swing.JLabel();
-
-        lblNumeroCuenta.setFont(new java.awt.Font("Century Schoolbook", 1, 14)); // NOI18N
-        lblNumeroCuenta.setText("Numero de Cuenta");
+        lblNumeroCuenta = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setText("Transferencia");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 10, 70, 30));
+        lblTitulo.setFont(new java.awt.Font("Century Schoolbook", 1, 24)); // NOI18N
+        lblTitulo.setText("Transferencia");
 
         txtCantidad.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtCantidadKeyTyped(evt);
             }
         });
-        getContentPane().add(txtCantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 200, 100, 30));
 
-        jLabel3.setText("Cantidad");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 200, 150, 30));
+        lblCantidad.setFont(new java.awt.Font("Century Schoolbook", 1, 18)); // NOI18N
+        lblCantidad.setText("Cantidad");
 
+        btnAceptar.setBackground(new java.awt.Color(149, 175, 255));
+        btnAceptar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnAceptar.setText("Aceptar");
         btnAceptar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAceptarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnAceptar, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 270, -1, -1));
 
+        btnCancelar.setBackground(new java.awt.Color(149, 175, 255));
+        btnCancelar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnCancelar.setText("Cancelar");
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCancelarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 270, -1, -1));
-        getContentPane().add(txtNumeroCuentaEnvio, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 142, 100, 30));
 
-        jLabel4.setText("Numero De Cuenta A Enviar");
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 150, 150, 20));
+        lblNumeroCuentaEnvio.setFont(new java.awt.Font("Century Schoolbook", 1, 18)); // NOI18N
+        lblNumeroCuentaEnvio.setText("Numero De Cuenta A Enviar");
 
-        lblNumeroCliente.setFont(new java.awt.Font("Century Schoolbook", 1, 14)); // NOI18N
-        lblNumeroCliente.setText("Numero de Cliente:");
-        getContentPane().add(lblNumeroCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 100, -1, -1));
+        lblNumeroCliente.setFont(new java.awt.Font("Century Schoolbook", 1, 18)); // NOI18N
+        lblNumeroCliente.setText("Nombre Cliente:");
 
-        lblNumeroCuenta2.setFont(new java.awt.Font("Century Schoolbook", 1, 14)); // NOI18N
-        lblNumeroCuenta2.setText("Numero de Cuenta:");
-        getContentPane().add(lblNumeroCuenta2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, -1, -1));
+        lblNumeroCuenta.setFont(new java.awt.Font("Century Schoolbook", 1, 18)); // NOI18N
+        lblNumeroCuenta.setText("Numero de Cuenta:");
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblNumeroCuentaEnvio)
+                    .addComponent(lblCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(txtCantidad, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE)
+                    .addComponent(txtNumeroCuentaEnvio))
+                .addGap(77, 77, 77))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(178, 178, 178))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(121, 121, 121)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblNumeroCuenta)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(30, 30, 30)
+                                .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(105, 105, 105)
+                                .addComponent(btnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(77, 77, 77)
+                        .addComponent(lblNumeroCliente)))
+                .addContainerGap(148, Short.MAX_VALUE))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(lblTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lblNumeroCuenta)
+                .addGap(22, 22, 22)
+                .addComponent(lblNumeroCliente)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtNumeroCuentaEnvio, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblNumeroCuentaEnvio, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(23, 23, 23)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(40, 40, 40)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(67, Short.MAX_VALUE))
+        );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
- if (!txtCantidad.getText().equals("")) {
-        operacion();
+ if (txtCantidad.getText().equals("")||txtNumeroCuentaEnvio.getText().equals("")) {
+        JOptionPane.showMessageDialog(this, "Hay espacios Vacios",
+                    "Información", JOptionPane.ERROR_MESSAGE);
+ }else{
+     operacion();
+      
  }
     }//GEN-LAST:event_btnAceptarActionPerformed
 
@@ -158,8 +234,8 @@ public class frmTranferir extends javax.swing.JFrame {
         if (opcion!=0) {
             
         }else{
-            frmInicio inicio = new frmInicio(clienteDAO);
-            inicio.setVisible(true);
+            frmMenu menu = new frmMenu(CuentasDAO,clienteDAO,cliente);
+            menu.setVisible(true);
             this.dispose();
         }   // TODO add your handling code here:
     }//GEN-LAST:event_btnCancelarActionPerformed
@@ -186,13 +262,32 @@ public class frmTranferir extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptar;
     private javax.swing.JButton btnCancelar;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel lblCantidad;
     private javax.swing.JLabel lblNumeroCliente;
     private javax.swing.JLabel lblNumeroCuenta;
-    private javax.swing.JLabel lblNumeroCuenta2;
+    private javax.swing.JLabel lblNumeroCuentaEnvio;
+    private javax.swing.JLabel lblTitulo;
     private javax.swing.JTextField txtCantidad;
     private javax.swing.JTextField txtNumeroCuentaEnvio;
     // End of variables declaration//GEN-END:variables
+class FondoPanel extends JPanel {
+
+        private Image imagen;
+
+        @Override
+        public void paint(Graphics g) {
+            ImageIcon imageIcon = new javax.swing.ImageIcon(getClass().getResource("/xp.jpg"));
+            imagen = imageIcon.getImage();
+            
+            g.drawImage(imagen, 0, 0, getWidth(), getHeight(), this);
+
+            setOpaque(false);
+            try{
+                super.paint(g); 
+            }catch(Exception e){
+                
+            }
+           
+        }
+    }
 }

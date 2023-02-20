@@ -35,7 +35,6 @@ public class TransferenciaDAO implements ITransferenciaDAO{
                     Transferencia.getCantidad()
                     );
             
-            System.out.println(codigo);
             
             comando.executeUpdate(codigo);
             conex.close();
@@ -52,7 +51,6 @@ public class TransferenciaDAO implements ITransferenciaDAO{
             Statement comando = conex.createStatement();
             String codigo= String.format("UPDATE Cuenta SET saldo="+a+" Where numeroCuenta="+cuenta);
              String codigo2= String.format("UPDATE Cuenta SET saldo="+b+" Where numeroCuenta="+Cuentaenviar);
-            System.out.println(codigo);
             
             comando.executeUpdate(codigo);
              comando.executeUpdate(codigo2);

@@ -69,6 +69,7 @@ public class frmMenu extends javax.swing.JFrame {
             btnHistorial.setEnabled(false);
             btnHistorialSinCuenta.setEnabled(false);
             btnHistorialTrans.setEnabled(false);
+            lblDinero.setText("");
         }else{
             lblAviso.setVisible(false);
             BtnRetirarSinCuenta.setEnabled(true);
@@ -126,19 +127,36 @@ public class frmMenu extends javax.swing.JFrame {
     public void modeloHistorialTransaccion(int NumeroCuenta){
         DefaultTableModel defa = new DefaultTableModel();
         tblHistorial.setModel(defa);
+        defa.addColumn("NUMERO CUENTA ORIGEN");
         defa.addColumn("NUMERO CUENTA ENVIO");
         defa.addColumn("CANTIDAD");
         defa.addColumn("FECHA REALIZADO");
+        
         if (HistorialDAO.HistorialTransacciones(NumeroCuenta)==null) {
             
         }else{
             Object[] datos = new Object[defa.getColumnCount()];
             for (Historial historial:HistorialDAO.HistorialTransacciones(NumeroCuenta)) {
-               datos[0]=historial.getNumeroCuentaEnvio();
-               datos[1]=historial.getCantidad();
-               datos[2]=historial.getFechaHora();
+               datos[0]=historial.getNumeroCuentaOrigen(); 
+               datos[1]=historial.getNumeroCuentaEnvio();
+               datos[2]=historial.getCantidad();
+               datos[3]=historial.getFechaHora();
                defa.addRow(datos);
         }
+            
+        }
+        if (HistorialDAO.HistorialTransaccionesRecibido(NumeroCuenta)==null) {
+            
+        }else{
+            Object[] datos = new Object[defa.getColumnCount()];
+            for (Historial historial:HistorialDAO.HistorialTransaccionesRecibido(NumeroCuenta)) {
+               datos[0]=historial.getNumeroCuentaOrigen(); 
+               datos[1]=historial.getNumeroCuentaEnvio();
+               datos[2]=historial.getCantidad();
+               datos[3]=historial.getFechaHora();
+               defa.addRow(datos);
+        }
+            
         }
     }
     public void modeloHistorialTodo(int NumeroCuenta){
@@ -169,6 +187,19 @@ public class frmMenu extends javax.swing.JFrame {
                defa.addRow(datos);
              }     
         }
+        if (HistorialDAO.HistorialTransaccionesRecibido(NumeroCuenta)==null) {
+           
+        }else{
+            Object[] datos = new Object[defa.getColumnCount()];
+            for (Historial historial:HistorialDAO.HistorialTransaccionesRecibido(NumeroCuenta)) {
+               datos[0]=historial.getCantidad();
+               datos[1]=historial.getFechaHora();
+               datos[2]="Transaccion(Recibido)";
+               defa.addRow(datos);
+        }
+  
+        }
+    
     }
     public Cuenta cuentaCombo(){
         Cuenta cuentaSeleccionada = (Cuenta) comboBoxCuentas.getSelectedItem();
@@ -243,6 +274,7 @@ public class frmMenu extends javax.swing.JFrame {
         lblDinero.setText(":");
 
         btnTransferencia.setBackground(new java.awt.Color(149, 175, 255));
+        btnTransferencia.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnTransferencia.setText("Transferir");
         btnTransferencia.setFocusPainted(false);
         btnTransferencia.addActionListener(new java.awt.event.ActionListener() {
@@ -274,6 +306,7 @@ public class frmMenu extends javax.swing.JFrame {
         jScrollPane2.setViewportView(tblHistorial);
 
         btnCrearCuenta.setBackground(new java.awt.Color(149, 175, 255));
+        btnCrearCuenta.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnCrearCuenta.setText("Crear Cuenta");
         btnCrearCuenta.setFocusPainted(false);
         btnCrearCuenta.addActionListener(new java.awt.event.ActionListener() {
@@ -283,6 +316,7 @@ public class frmMenu extends javax.swing.JFrame {
         });
 
         BtnRetirarSinCuenta.setBackground(new java.awt.Color(149, 175, 255));
+        BtnRetirarSinCuenta.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         BtnRetirarSinCuenta.setText("Crear Retiro Sin cuenta");
         BtnRetirarSinCuenta.setFocusPainted(false);
         BtnRetirarSinCuenta.addActionListener(new java.awt.event.ActionListener() {
@@ -306,6 +340,7 @@ public class frmMenu extends javax.swing.JFrame {
         });
 
         btnActualizarDatos.setBackground(new java.awt.Color(149, 175, 255));
+        btnActualizarDatos.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnActualizarDatos.setText("Actualiza Datos");
         btnActualizarDatos.setFocusPainted(false);
         btnActualizarDatos.addActionListener(new java.awt.event.ActionListener() {
@@ -315,6 +350,7 @@ public class frmMenu extends javax.swing.JFrame {
         });
 
         btnCancelarCuenta.setBackground(new java.awt.Color(153, 0, 0));
+        btnCancelarCuenta.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnCancelarCuenta.setText("Cancelar Cuenta");
         btnCancelarCuenta.setFocusPainted(false);
         btnCancelarCuenta.addActionListener(new java.awt.event.ActionListener() {
@@ -324,6 +360,7 @@ public class frmMenu extends javax.swing.JFrame {
         });
 
         btnSalir.setBackground(new java.awt.Color(255, 153, 51));
+        btnSalir.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnSalir.setText("Salir");
         btnSalir.setFocusPainted(false);
         btnSalir.addActionListener(new java.awt.event.ActionListener() {
@@ -332,6 +369,8 @@ public class frmMenu extends javax.swing.JFrame {
             }
         });
 
+        btnHistorial.setBackground(new java.awt.Color(149, 175, 255));
+        btnHistorial.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnHistorial.setText("Historial General");
         btnHistorial.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -339,6 +378,8 @@ public class frmMenu extends javax.swing.JFrame {
             }
         });
 
+        btnHistorialSinCuenta.setBackground(new java.awt.Color(149, 175, 255));
+        btnHistorialSinCuenta.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnHistorialSinCuenta.setText("Historial Retiros Sin Cuenta");
         btnHistorialSinCuenta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -346,6 +387,8 @@ public class frmMenu extends javax.swing.JFrame {
             }
         });
 
+        btnHistorialTrans.setBackground(new java.awt.Color(149, 175, 255));
+        btnHistorialTrans.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnHistorialTrans.setText("Historial Transacciones");
         btnHistorialTrans.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -383,7 +426,7 @@ public class frmMenu extends javax.swing.JFrame {
                                 .addComponent(btnHistorialSinCuenta)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnHistorialTrans)))
-                        .addGap(0, 159, Short.MAX_VALUE))
+                        .addGap(0, 71, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
@@ -420,28 +463,21 @@ public class frmMenu extends javax.swing.JFrame {
                     .addComponent(btnHistorialSinCuenta)
                     .addComponent(btnHistorial)
                     .addComponent(btnHistorialTrans))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(28, 28, 28))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(19, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(lblSaldo, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lblDinero, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(35, 35, 35)
-                                .addComponent(btnTransferencia)
-                                .addGap(18, 18, 18)
-                                .addComponent(BtnRetirarSinCuenta)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnCancelarCuenta)
-                                .addGap(42, 42, 42))))))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblSaldo, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblDinero, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(35, 35, 35)
+                        .addComponent(btnTransferencia)
+                        .addGap(18, 18, 18)
+                        .addComponent(BtnRetirarSinCuenta)
+                        .addGap(118, 118, 118)
+                        .addComponent(btnCancelarCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(76, Short.MAX_VALUE))
         );
 
         pack();

@@ -77,7 +77,7 @@ public class HistorialDAO implements IHistorialDAO{
         try {
             Connection conex = this.conexion.crearConexion();
             Statement comandoSQL = conex.createStatement();
-            String querySql= "select numeroCuentaEnvio,cantidad,fechaHora from transacciones where numeroCuenta="+NumeroCuenta;
+            String querySql= "select numeroCuenta,numeroCuentaEnvio,cantidad,fechaHora from transacciones where numeroCuenta="+NumeroCuenta;
              ResultSet resultado = comandoSQL.executeQuery(querySql);
          
              while(resultado.next()){
@@ -85,10 +85,45 @@ public class HistorialDAO implements IHistorialDAO{
                   ListHistorial = new ArrayList<>();
               }   
                  Historial histo = new Historial();
-                 String numeroCuenta = resultado.getString("numeroCuentaEnvio");
+                 String numeroCuentaOrigen = resultado.getString("numeroCuenta");
+                 String numeroCuentaEnvio = resultado.getString("numeroCuentaEnvio");
                  String cantidad = resultado.getString("cantidad");
                  String fechaHora = resultado.getString("fechaHora");
-                 histo.setNumeroCuentaEnvio(numeroCuenta);
+                 histo.setNumeroCuentaOrigen(numeroCuentaOrigen);
+                 histo.setNumeroCuentaEnvio(numeroCuentaEnvio);
+                 histo.setCantidad(cantidad);
+                 histo.setFechaHora(fechaHora);
+                 ListHistorial.add(histo);
+
+         }
+        conex.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(ClientesDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+      return ListHistorial;
+    }
+    
+    @Override
+    public List<Historial> HistorialTransaccionesRecibido(int NumeroCuenta) {
+       
+      List<Historial> ListHistorial = null;
+        try {
+            Connection conex = this.conexion.crearConexion();
+            Statement comandoSQL = conex.createStatement();
+            String querySql= "select numeroCuenta,numeroCuentaEnvio,cantidad,fechaHora from transacciones where numeroCuentaEnvio="+NumeroCuenta;
+             ResultSet resultado = comandoSQL.executeQuery(querySql);
+         
+             while(resultado.next()){
+              if(ListHistorial==null){
+                  ListHistorial = new ArrayList<>();
+              }   
+                 Historial histo = new Historial();
+                 String numeroCuentaOrigen = resultado.getString("numeroCuenta");
+                 String numeroCuentaEnvio = resultado.getString("numeroCuentaEnvio");
+                 String cantidad = resultado.getString("cantidad");
+                 String fechaHora = resultado.getString("fechaHora");
+                 histo.setNumeroCuentaOrigen(numeroCuentaOrigen);
+                 histo.setNumeroCuentaEnvio(numeroCuentaEnvio);
                  histo.setCantidad(cantidad);
                  histo.setFechaHora(fechaHora);
                  ListHistorial.add(histo);

@@ -5,6 +5,7 @@
 package Frames;
 
 import Entidades.RetiroSinCuenta;
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import javax.swing.ImageIcon;
@@ -29,6 +30,14 @@ public class frmRetiroSinCuenta extends javax.swing.JFrame {
         this.retiroSinCuentaDAO=retiroSinCuentaDAO;
         this.setContentPane(fondo);
         initComponents();
+        crearFont();
+    }
+    public void crearFont(){
+        //Colocar Colores A Label
+        lblTitulo.setForeground(Color.black);
+        lblFolio.setForeground(Color.black);
+        lblContraseña.setForeground(Color.black);
+        
     }
     public boolean retirar(){
         
@@ -77,9 +86,9 @@ public class frmRetiroSinCuenta extends javax.swing.JFrame {
 
         txtFolio = new javax.swing.JTextField();
         txtContraseña = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
+        lblContraseña = new javax.swing.JLabel();
+        lblFolio = new javax.swing.JLabel();
+        lblTitulo = new javax.swing.JLabel();
         btnCancelar = new javax.swing.JButton();
         btnAceptar = new javax.swing.JButton();
 
@@ -91,15 +100,17 @@ public class frmRetiroSinCuenta extends javax.swing.JFrame {
             }
         });
 
-        jLabel4.setFont(new java.awt.Font("Century Schoolbook", 1, 18)); // NOI18N
-        jLabel4.setText("Contraseña:");
+        lblContraseña.setFont(new java.awt.Font("Century Schoolbook", 1, 18)); // NOI18N
+        lblContraseña.setText("Contraseña:");
 
-        jLabel6.setFont(new java.awt.Font("Century Schoolbook", 1, 18)); // NOI18N
-        jLabel6.setText("FOLIO:");
+        lblFolio.setFont(new java.awt.Font("Century Schoolbook", 1, 18)); // NOI18N
+        lblFolio.setText("FOLIO:");
 
-        jLabel1.setFont(new java.awt.Font("Century Schoolbook", 1, 24)); // NOI18N
-        jLabel1.setText("Retiro Sin Cuenta");
+        lblTitulo.setFont(new java.awt.Font("Century Schoolbook", 1, 24)); // NOI18N
+        lblTitulo.setText("Retiro Sin Cuenta");
 
+        btnCancelar.setBackground(new java.awt.Color(149, 175, 255));
+        btnCancelar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnCancelar.setText("Cancelar");
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -107,6 +118,8 @@ public class frmRetiroSinCuenta extends javax.swing.JFrame {
             }
         });
 
+        btnAceptar.setBackground(new java.awt.Color(149, 175, 255));
+        btnAceptar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         btnAceptar.setText("Aceptar");
         btnAceptar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -121,10 +134,10 @@ public class frmRetiroSinCuenta extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(70, 70, 70)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblFolio, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(180, 180, 180)
                                 .addComponent(txtFolio, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -134,7 +147,7 @@ public class frmRetiroSinCuenta extends javax.swing.JFrame {
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(btnAceptar))
                                 .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lblContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGap(10, 10, 10)
                                     .addComponent(txtContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGap(31, 31, 31)))
@@ -144,16 +157,16 @@ public class frmRetiroSinCuenta extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(29, 29, 29)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lblTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblFolio, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(20, 20, 20)
                         .addComponent(txtFolio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(10, 10, 10)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(20, 20, 20)
                         .addComponent(txtContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -232,9 +245,9 @@ public class frmRetiroSinCuenta extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptar;
     private javax.swing.JButton btnCancelar;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel lblContraseña;
+    private javax.swing.JLabel lblFolio;
+    private javax.swing.JLabel lblTitulo;
     private javax.swing.JTextField txtContraseña;
     private javax.swing.JTextField txtFolio;
     // End of variables declaration//GEN-END:variables

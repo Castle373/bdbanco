@@ -14,4 +14,6 @@ import java.util.List;
 public interface IHistorialDAO {
     public List<Historial> HistorialRetiroSinCuenta(int idCuenta);
     public List<Historial> HistorialTransacciones(int idCuenta);
+    public List<Historial> HistorialTransaccionesRecibido(int idCuenta);
+    
 }
